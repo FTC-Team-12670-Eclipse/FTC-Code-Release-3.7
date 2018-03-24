@@ -41,21 +41,27 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
         robot.driveTrain.park();
         robot.jewelSwatter.wristServo.setPosition(UniversalConstants.jewelWristForwards);
         robot.driveTrain.moveToPositionInches(-2.5, .2);
-
+        double startTime;
         switch (vuMark) {
             case LEFT:
                 robot.strafeToJewelSensedDistance(-.2, 5, targetAngle, true);
                 //false parameter gives early exit to function, and doesn't park
-                robot.jewelSwatter.moveJewelForwardsAway();
-                robot.driveTrain.assistedStrafe(-.2, 0);
-                sleep(450);
+                robot.jewelSwatter.zeroSwatter();
+                startTime = getRuntime();
+                while (opModeIsActive() && getRuntime() - startTime < 1) {
+                    robot.driveTrain.assistedStrafe(1, 0);
+                }
+                robot.driveTrain.park();
                 robot.jewelSwatter.moveJewelToForwards();
             case CENTER:
                 robot.strafeToJewelSensedDistance(-.2, 5, targetAngle, true);
                 //false parameter gives early exit to function, and doesn't park
-                robot.jewelSwatter.moveJewelForwardsAway();
-                robot.driveTrain.assistedStrafe(-.2, 0);
-                sleep(450);
+                robot.jewelSwatter.zeroSwatter();
+                startTime = getRuntime();
+                while (opModeIsActive() && getRuntime() - startTime < 1) {
+                    robot.driveTrain.assistedStrafe(1, 0);
+                }
+                robot.driveTrain.park();
                 robot.jewelSwatter.moveJewelToForwards();
             case RIGHT:
             default:
@@ -93,8 +99,8 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
         robot.driveTrain.moveToInches(-20, 1);
         robot.driveTrain.gyroTurn(.25, 0);
         robot.driveTrain.gyroTurn(.05, 0);
-        double startTime = getRuntime();
-        while (opModeIsActive() && getRuntime() - startTime < 1){
+        startTime = getRuntime();
+        while (opModeIsActive() && getRuntime() - startTime < 1) {
             robot.driveTrain.assistedStrafe(1, 0);
         }
         robot.driveTrain.park();
