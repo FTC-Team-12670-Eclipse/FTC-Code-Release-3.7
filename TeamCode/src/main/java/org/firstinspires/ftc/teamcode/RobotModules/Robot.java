@@ -224,14 +224,14 @@ public class Robot {
         jewelSwatter.moveJewelToForwards();
         double dist = jewelSwatter.sensorDistance.getDistance(distanceUnit);
         double error = 100;
-        while (Double.isNaN(dist) || error > .5) {
+        while (Double.isNaN(dist) || error > 1) {
+            dist = jewelSwatter.sensorDistance.getDistance(distanceUnit);
             if (Double.isNaN(dist)) {
-                error = -1;
+                error = -100;
             } else {
                 error = targetDistance - dist;
             }
-            dist = jewelSwatter.sensorDistance.getDistance(distanceUnit);
-            if(targetDistance - dist < 1.25 && !park){
+            if (targetDistance - dist < 1.5 && !park) {
                 return;
             }
             driveTrain.assistedStrafe(Math.abs(power) * Math.signum(error), targetHeading);
