@@ -49,7 +49,7 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
                 robot.jewelSwatter.zeroSwatter();
                 startTime = getRuntime();
                 while (opModeIsActive() && getRuntime() - startTime < 1) {
-                    robot.driveTrain.assistedStrafe(1, 0);
+                    robot.driveTrain.assistedStrafe(-.4, 0);
                 }
                 robot.driveTrain.park();
                 robot.jewelSwatter.moveJewelToForwards();
@@ -59,7 +59,7 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
                 robot.jewelSwatter.zeroSwatter();
                 startTime = getRuntime();
                 while (opModeIsActive() && getRuntime() - startTime < 1) {
-                    robot.driveTrain.assistedStrafe(1, 0);
+                    robot.driveTrain.assistedStrafe(-.4, 0);
                 }
                 robot.driveTrain.park();
                 robot.jewelSwatter.moveJewelToForwards();
