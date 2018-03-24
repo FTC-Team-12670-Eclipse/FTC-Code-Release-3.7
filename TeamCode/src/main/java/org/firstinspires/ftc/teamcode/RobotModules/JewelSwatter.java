@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.RobotModules;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
@@ -13,6 +14,7 @@ public class JewelSwatter {
     public Servo elbowServo, wristServo;
     Controller lastGamepad1;
     ColorSensor colorSensor = null;
+    public DistanceSensor sensorDistance = null;
     LinearOpMode linearOpMode;
     boolean colorSensorLed = false;
     double startRed;
@@ -28,7 +30,7 @@ public class JewelSwatter {
             elbowServo.setPosition(UniversalConstants.jewelElbowStored);
         }
         colorSensor = linearOpMode.hardwareMap.colorSensor.get(UniversalConstants.jewelColorSensor);
-
+        sensorDistance = linearOpMode.hardwareMap.get(DistanceSensor.class, "jcs");
         if (colorSensor != null) {
             setLed(true);
         }
@@ -96,6 +98,16 @@ public class JewelSwatter {
         }
         waitForServoToMove(UniversalConstants.jewelServoSleepTimeShort);
         wristServo.setPosition(UniversalConstants.jewelWristStored);
+    }
+
+    public void moveJewelToForwards(){
+        elbowServo.setPosition(UniversalConstants.jewelElbowForwards);
+        wristServo.setPosition(UniversalConstants.jewelWristForwards);
+    }
+
+    public void moveJewelForwardsAway(){
+        elbowServo.setPosition(UniversalConstants.jewelElbowForwards);
+        wristServo.setPosition(UniversalConstants.jewelWristForwardsAway);
     }
 
     public void waitForServoToMove(long time) throws InterruptedException {

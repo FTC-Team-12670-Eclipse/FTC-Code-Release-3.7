@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.AutonomousUtil;
 import org.firstinspires.ftc.teamcode.UniversalConstants;
@@ -202,5 +203,44 @@ public class Robot {
         linearOpMode.telemetry.update();
     }
 
+
+    public void strafeToJewelSensedDistance(double power, double distance, double targetHeading, boolean park) {
+        strafeToJewelSensedDistance(power, distance, targetHeading, DistanceUnit.INCH, park);
+    }
+
+    public void strafeToJewelSensedDistance(double power, double distance, DistanceUnit distanceUnit, boolean park) {
+        strafeToJewelSensedDistance(power, distance, driveTrain.getHeading(), distanceUnit, park);
+    }
+
+    public void strafeToJewelSensedDistance(double power, double distance, boolean park) {
+        strafeToJewelSensedDistance(power, distance, driveTrain.getHeading(), DistanceUnit.INCH, park);
+    }
+
+    public void strafeToJewelSensedDistance(double power, double distance) {
+        strafeToJewelSensedDistance(power, distance, driveTrain.getHeading(), DistanceUnit.INCH, true);
+    }
+
+    public void strafeToJewelSensedDistance(double power, double targetDistance, double targetHeading, DistanceUnit distanceUnit, boolean park) {
+        jewelSwatter.moveJewelToForwards();
+        double dist = jewelSwatter.sensorDistance.getDistance(distanceUnit);
+        double error = 100;
+        while (Double.isNaN(dist) || error > .5) {
+            if (Double.isNaN(dist)) {
+                error = -1;
+            } else {
+                error = targetDistance - dist;
+            }
+            dist = jewelSwatter.sensorDistance.getDistance(distanceUnit);
+            if(targetDistance - dist < 1.25 && !park){
+                return;
+            }
+            driveTrain.assistedStrafe(Math.abs(power) * Math.signum(error), targetHeading);
+            telemetry.addData("Distance", dist);
+            telemetry.update();
+        }
+        if (park) {
+            driveTrain.park();
+        }
+    }
 
 }

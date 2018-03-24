@@ -41,11 +41,15 @@ public class UniversalConstants {
 
     public static final double jewelWristStored = 0;
     public static final double jewelWristLowered = .53; // .62 for robot 1;
+    public static final double jewelWristForwards = .8;
+    public static final double jewelWristForwardsAway = 1;
 
-    public static final double jewelElbowStored = .72; // .3 for robot 1
-    public static final double jewelElbowCenter = .35; // .25 for robot 1;
+
+    public static final double jewelElbowStored = 1; // .3 for robot 1
+    public static final double jewelElbowCenter = .35+.28; // .25 for robot 1;
     public static final double jewelElbowScoreLeft = jewelElbowCenter - .12; // .17 for robot 1;
     public static final double jewelElbowScoreRight = jewelElbowCenter + .12; // .32 for robot 1;
+    public static final double jewelElbowForwards = .2;
 
     public static final int jewelServoSleepTimeLong = 1000;
     public static final int jewelServoSleepTimeMedium = 600;
