@@ -31,7 +31,6 @@ public class AutonomousCloseIntakeRedNew extends LinearOpMode {
             vuMark = robot.vuforiaRelicRecoveryGetter.getPattern();
         }
 
-
         double targetAngle = 0;
 
         robot.driveTrain.gyroTurn(.05, targetAngle);
@@ -41,24 +40,24 @@ public class AutonomousCloseIntakeRedNew extends LinearOpMode {
         sleep(250);
         robot.driveTrain.park();
         robot.jewelSwatter.wristServo.setPosition(UniversalConstants.jewelWristForwards);
-        sleep(50);
+        robot.driveTrain.moveToPositionInches(-1.5, .25);
 
         switch (vuMark) {
             case LEFT:
-                robot.strafeToJewelSensedDistance(-.25, 7, targetAngle, false);
+                robot.strafeToJewelSensedDistance(-.4, 10, targetAngle, false);
                 //false parameter gives early exit to function, and doesn't park
                 robot.jewelSwatter.moveJewelForwardsAway();
-                sleep(1250);
+                sleep(1000);
                 robot.jewelSwatter.moveJewelToForwards();
             case CENTER:
-                robot.strafeToJewelSensedDistance(-.25, 7, targetAngle, false);
+                robot.strafeToJewelSensedDistance(-.4, 10, targetAngle, false);
                 //false parameter gives early exit to function, and doesn't park
                 robot.jewelSwatter.moveJewelForwardsAway();
-                sleep(1250);
+                sleep(1000);
                 robot.jewelSwatter.moveJewelToForwards();
             case RIGHT:
             default:
-                robot.strafeToJewelSensedDistance(-.1, 5, targetAngle, true);
+                robot.strafeToJewelSensedDistance(-.2, 5, targetAngle, true);
                 break;
         }
         robot.jewelSwatter.zeroSwatter();
@@ -71,6 +70,7 @@ public class AutonomousCloseIntakeRedNew extends LinearOpMode {
 
         robot.driveTrain.moveToInches(5, .25);
         robot.driveTrain.moveToInches(-7, .5);
+        robot.intakeMecanism.stopIntake();
         robot.driveTrain.gyroTurn(.25, 90);
         robot.driveTrain.gyroTurn(.07, 90);
         switch (vuMark) {

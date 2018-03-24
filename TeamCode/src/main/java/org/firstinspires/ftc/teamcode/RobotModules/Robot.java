@@ -205,7 +205,7 @@ public class Robot {
 
 
     public void strafeToJewelSensedDistance(double power, double distance, double targetHeading, boolean park) {
-        strafeToJewelSensedDistance(power, distance, targetHeading, DistanceUnit.INCH, park);
+        strafeToJewelSensedDistance(power, distance, targetHeading, DistanceUnit.CM, park);
     }
 
     public void strafeToJewelSensedDistance(double power, double distance, DistanceUnit distanceUnit, boolean park) {
@@ -213,11 +213,11 @@ public class Robot {
     }
 
     public void strafeToJewelSensedDistance(double power, double distance, boolean park) {
-        strafeToJewelSensedDistance(power, distance, driveTrain.getHeading(), DistanceUnit.INCH, park);
+        strafeToJewelSensedDistance(power, distance, driveTrain.getHeading(), DistanceUnit.CM, park);
     }
 
     public void strafeToJewelSensedDistance(double power, double distance) {
-        strafeToJewelSensedDistance(power, distance, driveTrain.getHeading(), DistanceUnit.INCH, true);
+        strafeToJewelSensedDistance(power, distance, driveTrain.getHeading(), DistanceUnit.CM, true);
     }
 
     public void strafeToJewelSensedDistance(double power, double targetDistance, double targetHeading, DistanceUnit distanceUnit, boolean park) {
