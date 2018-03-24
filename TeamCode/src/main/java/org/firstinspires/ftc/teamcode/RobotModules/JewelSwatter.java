@@ -106,7 +106,7 @@ public class JewelSwatter {
     }
 
     public void moveJewelForwardsAway(){
-        elbowServo.setPosition(UniversalConstants.jewelElbowForwards);
+        elbowServo.setPosition(UniversalConstants.jewelElbowForwardsAway);
         wristServo.setPosition(UniversalConstants.jewelWristForwardsAway);
     }
 

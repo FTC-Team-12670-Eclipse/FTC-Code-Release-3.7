@@ -40,19 +40,21 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
         sleep(250);
         robot.driveTrain.park();
         robot.jewelSwatter.wristServo.setPosition(UniversalConstants.jewelWristForwards);
-        robot.driveTrain.moveToPositionInches(-2.5, .25);
+        robot.driveTrain.moveToPositionInches(-2.5, .2);
 
         switch (vuMark) {
             case LEFT:
-                robot.strafeToJewelSensedDistance(-.25, 10, targetAngle, false);
+                robot.strafeToJewelSensedDistance(-.2, 5, targetAngle, true);
                 //false parameter gives early exit to function, and doesn't park
                 robot.jewelSwatter.moveJewelForwardsAway();
+                robot.driveTrain.assistedStrafe(-.2, 0);
                 sleep(450);
                 robot.jewelSwatter.moveJewelToForwards();
             case CENTER:
-                robot.strafeToJewelSensedDistance(-.25, 10, targetAngle, false);
+                robot.strafeToJewelSensedDistance(-.2, 5, targetAngle, true);
                 //false parameter gives early exit to function, and doesn't park
                 robot.jewelSwatter.moveJewelForwardsAway();
+                robot.driveTrain.assistedStrafe(-.2, 0);
                 sleep(450);
                 robot.jewelSwatter.moveJewelToForwards();
             case RIGHT:

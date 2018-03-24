@@ -50,6 +50,7 @@ public class UniversalConstants {
     public static final double jewelElbowScoreLeft = jewelElbowCenter - .12; // .17 for robot 1;
     public static final double jewelElbowScoreRight = jewelElbowCenter + .12; // .32 for robot 1;
     public static final double jewelElbowForwards = .2;
+    public static final double jewelElbowForwardsAway = .5;
 
     public static final int jewelServoSleepTimeLong = 1000;
     public static final int jewelServoSleepTimeMedium = 600;
