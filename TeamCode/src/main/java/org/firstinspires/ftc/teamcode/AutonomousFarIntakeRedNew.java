@@ -53,6 +53,7 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
                 }
                 robot.driveTrain.park();
                 robot.jewelSwatter.moveJewelToForwards();
+                sleep(100);
             case CENTER:
                 robot.strafeToJewelSensedDistance(-.2, 5, targetAngle, true);
                 //false parameter gives early exit to function, and doesn't park
@@ -63,6 +64,7 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
                 }
                 robot.driveTrain.park();
                 robot.jewelSwatter.moveJewelToForwards();
+                sleep(100);
             case RIGHT:
             default:
                 robot.strafeToJewelSensedDistance(-.2, 5, targetAngle, true);
