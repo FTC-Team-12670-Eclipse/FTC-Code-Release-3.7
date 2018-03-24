@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.RobotModules.Robot;
 
 @Autonomous(name = "Red FAR Color")
-public class AutonomousCloseIntakeRedNew extends LinearOpMode {
+public class AutonomousFarIntakeRedNew extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -40,20 +40,20 @@ public class AutonomousCloseIntakeRedNew extends LinearOpMode {
         sleep(250);
         robot.driveTrain.park();
         robot.jewelSwatter.wristServo.setPosition(UniversalConstants.jewelWristForwards);
-        robot.driveTrain.moveToPositionInches(-1.5, .25);
+        robot.driveTrain.moveToPositionInches(-2.5, .25);
 
         switch (vuMark) {
             case LEFT:
-                robot.strafeToJewelSensedDistance(-.4, 10, targetAngle, false);
+                robot.strafeToJewelSensedDistance(-.25, 10, targetAngle, false);
                 //false parameter gives early exit to function, and doesn't park
                 robot.jewelSwatter.moveJewelForwardsAway();
-                sleep(1000);
+                sleep(1250);
                 robot.jewelSwatter.moveJewelToForwards();
             case CENTER:
-                robot.strafeToJewelSensedDistance(-.4, 10, targetAngle, false);
+                robot.strafeToJewelSensedDistance(-.25, 10, targetAngle, false);
                 //false parameter gives early exit to function, and doesn't park
                 robot.jewelSwatter.moveJewelForwardsAway();
-                sleep(1000);
+                sleep(1250);
                 robot.jewelSwatter.moveJewelToForwards();
             case RIGHT:
             default:

@@ -90,6 +90,10 @@ public class RelicMechanism {
             pincherServo.setPosition(Range.clip(pincherServo.getPosition() - 2 * servoMoveSpeed, UniversalConstants.relicPincherPinched, UniversalConstants.relicPincherFullyOpen));
         }
 
+        if(linearOpMode.gamepad2.x){
+            storeServos();
+        }
+
     }
 
     public void updateTelemetry() {
