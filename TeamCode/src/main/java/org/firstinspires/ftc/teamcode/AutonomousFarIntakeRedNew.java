@@ -48,8 +48,8 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
                 //false parameter gives early exit to function, and doesn't park
                 robot.jewelSwatter.zeroSwatter();
                 startTime = getRuntime();
-                while (opModeIsActive() && getRuntime() - startTime < 1) {
-                    robot.driveTrain.assistedStrafe(-.4, 0);
+                while (opModeIsActive() && (getRuntime() - startTime < 1)) {
+                    robot.driveTrain.assistedStrafe(-.2, 0);
                 }
                 robot.driveTrain.park();
                 robot.jewelSwatter.moveJewelToForwards();
@@ -58,8 +58,8 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
                 //false parameter gives early exit to function, and doesn't park
                 robot.jewelSwatter.zeroSwatter();
                 startTime = getRuntime();
-                while (opModeIsActive() && getRuntime() - startTime < 1) {
-                    robot.driveTrain.assistedStrafe(-.4, 0);
+                while (opModeIsActive() && (getRuntime() - startTime < 1)) {
+                    robot.driveTrain.assistedStrafe(-.2, 0);
                 }
                 robot.driveTrain.park();
                 robot.jewelSwatter.moveJewelToForwards();
