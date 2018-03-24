@@ -47,13 +47,13 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
                 robot.strafeToJewelSensedDistance(-.25, 10, targetAngle, false);
                 //false parameter gives early exit to function, and doesn't park
                 robot.jewelSwatter.moveJewelForwardsAway();
-                sleep(1250);
+                sleep(450);
                 robot.jewelSwatter.moveJewelToForwards();
             case CENTER:
                 robot.strafeToJewelSensedDistance(-.25, 10, targetAngle, false);
                 //false parameter gives early exit to function, and doesn't park
                 robot.jewelSwatter.moveJewelForwardsAway();
-                sleep(1250);
+                sleep(450);
                 robot.jewelSwatter.moveJewelToForwards();
             case RIGHT:
             default:
@@ -91,8 +91,10 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
         robot.driveTrain.moveToInches(-20, 1);
         robot.driveTrain.gyroTurn(.25, 0);
         robot.driveTrain.gyroTurn(.05, 0);
-        robot.driveTrain.assistedStrafe(1, 0);
-        sleep(1000);
+        double startTime = getRuntime();
+        while (opModeIsActive() && getRuntime() - startTime < 1){
+            robot.driveTrain.assistedStrafe(1, 0);
+        }
         robot.driveTrain.park();
 
     }
