@@ -30,9 +30,6 @@ public class MecanumDriveTrain {
 
     private VoltageSensor voltageSensor;
 
-    public SmartRangeMR leftDistance;
-    public SmartRangeMR rightDistance;
-
     enum DriveMode {
         NORMAL_SPEED, SLOW_MODE, RELIC_SLOW
     }
@@ -103,11 +100,6 @@ public class MecanumDriveTrain {
         setAll(DcMotor.RunMode.RUN_USING_ENCODER);
 
         status("Motor Run-Modes");
-
-        leftDistance = new SmartRangeMR(hardwareMap.get(ModernRoboticsI2cRangeSensor.class, UniversalConstants.distanceSensorLeft));
-        rightDistance = new SmartRangeMR(hardwareMap.get(ModernRoboticsI2cRangeSensor.class, UniversalConstants.distanceSensorRight));
-
-        status("Distance Sensors");
     }
 
 
@@ -821,85 +813,6 @@ public class MecanumDriveTrain {
         double offAngle = getRawHeading() - targetHeading;
         double P_VALUE = .015;
         translateBy(0, horizontal, offAngle * P_VALUE);
-    }
-
-    public void arcadeToPosition(double y, double x, double c, DistanceUnit distanceUnit, double targetDistance) {
-        while (opModeIsActive() && ((leftDistance.getDistance(distanceUnit) > targetDistance) || (rightDistance.getDistance(distanceUnit) > targetDistance))) {
-            translateBy(y, x, c);
-            telemetry.addLine("Going backwards");
-            telemetry.update();
-        }
-        park();
-    }
-
-    public void forwardsBackwardsToPosition(double backwardsPower, DistanceUnit distanceUnit, double targetDistance) {
-        while (opModeIsActive() && ((leftDistance.getDistance(distanceUnit) > targetDistance) || (rightDistance.getDistance(distanceUnit) > targetDistance))) {
-            setAll(-Math.abs(backwardsPower));
-            telemetry.addLine("Going backwards");
-            telemetry.update();
-        }
-        park();
-    }
-
-    public void forwardsBackwardsFromPosition(double forwardsPower, DistanceUnit distanceUnit, double targetDistance) {
-        while (opModeIsActive() && ((leftDistance.getDistance(distanceUnit) < targetDistance) || (rightDistance.getDistance(distanceUnit) < targetDistance))) {
-            setAll(Math.abs(forwardsPower));
-            telemetry.addLine("Going backwards");
-            telemetry.update();
-        }
-        park();
-    }
-
-    public void strafeToLeftPosition(double strafePower, double targetHeading,
-                                     DistanceUnit distanceUnit, double targetDistance) {
-        double error = leftDistance.getDistance(distanceUnit) - targetDistance;
-        while (opModeIsActive() && (Math.abs(error) > .5)) {
-            error = targetDistance - leftDistance.getDistance(distanceUnit);
-            assistedStrafe(Math.signum(error) * strafePower, targetHeading);
-            telemetry.addLine("Strafing");
-            telemetry.update();
-        }
-        park();
-    }
-
-    public void strafeToRightPosition(double strafePower, double targetHeading,
-                                      DistanceUnit distanceUnit, double targetDistance) {
-        double measuredDistance = rightDistance.getDistance(distanceUnit);
-        double error = measuredDistance - targetDistance;
-        while (opModeIsActive() && (Math.abs(error) > .5)) {
-            measuredDistance = rightDistance.getDistance(distanceUnit);
-            if (measuredDistance == 0) {
-                return;
-            }
-            error = measuredDistance - targetDistance;
-            assistedStrafe(Math.signum(error) * strafePower, targetHeading);
-            telemetry.addLine("Strafing");
-            telemetry.addData("Error", error);
-            telemetry.addData("Distance", rightDistance.getDistance(distanceUnit));
-            telemetry.update();
-        }
-        park();
-    }
-
-
-    public void strafeToPosition(double strafePower, double targetHeading,
-                                 DistanceUnit distanceUnit, double targetDistance) {
-        while (opModeIsActive() && ((leftDistance.getDistance(distanceUnit) > targetDistance) || (rightDistance.getDistance(distanceUnit) > targetDistance))) {
-            assistedStrafe(strafePower, targetHeading);
-            telemetry.addLine("Strafing");
-            telemetry.update();
-        }
-        park();
-    }
-
-    public void strafeFromPosition(double strafePower, double targetHeading,
-                                   DistanceUnit distanceUnit, double targetDistance) {
-        while (opModeIsActive() && ((leftDistance.getDistance(distanceUnit) < targetDistance) && (rightDistance.getDistance(distanceUnit) < targetDistance))) {
-            assistedStrafe(strafePower, targetHeading);
-            telemetry.addLine("Strafing");
-            telemetry.update();
-        }
-        park();
     }
 
 }
