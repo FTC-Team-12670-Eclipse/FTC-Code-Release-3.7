@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.RobotModules.Robot;
 
@@ -38,41 +39,44 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
         robot.driveTrain.moveToPositionInches(-2.5, .2);
         double startTime;
         // deploy color distance sensor
+        double power = .2;
+        double distance = 3;
+        DistanceUnit unit = DistanceUnit.CM
+
         switch (vuMark) {
             case LEFT:
                 // strafe to the left at [some power] until distance is at [a critical value] <- parameter
                 // A method strafeToDistance(double power, double distance, DistanceUnit unit)
 
-                // bring color distance back up
-                // A method swingColorDistanceUp()
+                for(int i = 0; i < 3; i++) {
+                    robot.driveTrain.strafeToDistance(power, distance, unit)
+                    robot.driveTrain.swingColorDistanceUp();
+                    sleep(300);
+                    robot.driveTrain.swingColorDistanceDown();
+                }
 
-                // wait for some period of time
-                // sleep(someNumber)
+                robot.driveTrain.park();
 
-                // deploy color distance sensor
-                // A method swingColorDistanceDown()
-
-                // strafe to the left until distance is at a critical value
-                // bring color distance back up
-                // wait for some period of time
-                // deploy color distance sensor
-
-                // strafe to the left until distance is at a critical value
-                // stop moving
                 break;
             case CENTER:
-                // strafe to the left until distance is at a critical value
-                // bring color distance back up
-                // wait for some period of time
-                // deploy color distance sensor
+                for(int i = 0; i < 2; i++) {
+                    robot.driveTrain.strafeToDistance(power, distance, unit)
+                    robot.driveTrain.swingColorDistanceUp();
+                    sleep(300);
+                    robot.driveTrain.swingColorDistanceDown();
+                }
+                robot.driveTrain.park();
 
-                // strafe to the left until distance is at a critical value
-                // stop moving
                 break;
             case RIGHT:
             default:
-                // strafe to the left until distance is at a critical value
-                // stop moving
+                for(int i = 0; i < 1; i++) {
+                    robot.driveTrain.strafeToDistance(power, distance, unit)
+                    robot.driveTrain.swingColorDistanceUp();
+                    sleep(300);
+                    robot.driveTrain.swingColorDistanceDown();
+                }
+                robot.driveTrain.park();
                 break;
         }
         robot.intakeMecanism.outtakeSlowly();
