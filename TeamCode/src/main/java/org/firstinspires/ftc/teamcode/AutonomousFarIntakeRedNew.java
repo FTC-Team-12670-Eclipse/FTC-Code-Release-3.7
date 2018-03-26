@@ -37,31 +37,44 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
 
         robot.driveTrain.moveToPositionInches(-2.5, .2);
         double startTime;
+        // deploy color distance sensor
         switch (vuMark) {
             case LEFT:
-                startTime = getRuntime();
-                while (opModeIsActive() && getRuntime() - startTime < .4) {
-                    robot.driveTrain.assistedStrafe(-.5, 0);
-                }
+                // strafe to the left at [some power] until distance is at [a critical value] <- parameter
+                // A method strafeToDistance(double power, double distance, DistanceUnit unit)
+
+                // bring color distance back up
+                // A method swingColorDistanceUp()
+
+                // wait for some period of time
+                // sleep(someNumber)
+
+                // deploy color distance sensor
+                // A method swingColorDistanceDown()
+
+                // strafe to the left until distance is at a critical value
+                // bring color distance back up
+                // wait for some period of time
+                // deploy color distance sensor
+
+                // strafe to the left until distance is at a critical value
+                // stop moving
+                break;
             case CENTER:
-                startTime = getRuntime();
-                while (opModeIsActive() && getRuntime() - startTime < .4) {
-                    robot.driveTrain.assistedStrafe(-.5, 0);
-                }
+                // strafe to the left until distance is at a critical value
+                // bring color distance back up
+                // wait for some period of time
+                // deploy color distance sensor
+
+                // strafe to the left until distance is at a critical value
+                // stop moving
+                break;
             case RIGHT:
             default:
-                startTime = getRuntime();
-                while (opModeIsActive() && getRuntime() - startTime < .15) {
-                    robot.driveTrain.assistedStrafe(-.5, 0);
-                }
-                robot.driveTrain.park();
-                robot.jewelSwatter.moveJewelToForwards();
-                robot.intakeMecanism.deployFoldoutIntake();
-                sleep(100);
-                robot.strafeToJewelSensedDistance(-.2, 5, targetAngle, true);
+                // strafe to the left until distance is at a critical value
+                // stop moving
                 break;
         }
-        robot.jewelSwatter.zeroSwatter();
         robot.intakeMecanism.outtakeSlowly();
         robot.intakeMecanism.outtake();
 
