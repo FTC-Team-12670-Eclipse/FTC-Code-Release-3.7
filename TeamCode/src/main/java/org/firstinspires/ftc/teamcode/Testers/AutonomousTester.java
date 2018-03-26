@@ -64,8 +64,6 @@ public class AutonomousTester extends LinearOpMode {
                         modeName = "no set mode";
                 }
                 telemetry.addData("Mode", modeName);
-                telemetry.addData("Left Inch", robot.driveTrain.leftDistance.getDistance(DistanceUnit.INCH));
-                telemetry.addData("Right Inch", robot.driveTrain.rightDistance.getDistance(DistanceUnit.INCH));
                 telemetry.addData("modes", "" + robot.driveTrain.leftFront.getMode() + " | " + robot.driveTrain.rightFront.getMode() + " | " + robot.driveTrain.leftBack.getMode() + " | " + robot.driveTrain.rightBack.getMode());
                 telemetry.addData("zpb", "" + robot.driveTrain.leftFront.getZeroPowerBehavior() + " | " + robot.driveTrain.rightFront.getZeroPowerBehavior() + " | " + robot.driveTrain.leftBack.getZeroPowerBehavior() + " | " + robot.driveTrain.rightBack.getZeroPowerBehavior());
                 telemetry.addData("pos", "" + robot.driveTrain.leftFront.getCurrentPosition() + " | " + robot.driveTrain.rightFront.getCurrentPosition() + " | " + robot.driveTrain.leftBack.getCurrentPosition() + " | " + robot.driveTrain.rightBack.getCurrentPosition());

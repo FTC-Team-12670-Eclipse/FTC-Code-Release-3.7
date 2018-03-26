@@ -140,8 +140,6 @@ public class AutonomousUtil {
 
             l.telemetry.addLine("Ready to Go!");
             l.telemetry.addLine(shouldDunk ? "Will Extra Dunk" : "!!!!WILL NOT EXTRA DUNK!!!!");
-            l.telemetry.addData("Left Distance", robot.driveTrain.leftDistance.getDistance(DistanceUnit.INCH));
-            l.telemetry.addData("Right Distance", robot.driveTrain.rightDistance.getDistance(DistanceUnit.INCH));
             l.telemetry.addLine("Positive means turn Left");
             l.telemetry.addData("Left Angle (c1 l/r", leftAng);
             l.telemetry.addData("Center Angle (c1 u/d)", centerAng);
