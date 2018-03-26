@@ -6,7 +6,9 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.Range;
 
@@ -21,14 +23,19 @@ import org.firstinspires.ftc.teamcode.UniversalConstants;
 
 import java.util.Arrays;
 
+import static java.lang.Runtime.getRuntime;
+
 public class MecanumDriveTrain {
     private Telemetry telemetry;
     private LinearOpMode linearOpMode;
     private BNO055IMU imu;
 
     public DcMotor leftFront, leftBack, rightFront, rightBack;
+    public Servo colorDistanceServo;
 
     private VoltageSensor voltageSensor;
+
+    public DistanceSensor sensorDistance = null;
 
     enum DriveMode {
         NORMAL_SPEED, SLOW_MODE, RELIC_SLOW
@@ -78,6 +85,10 @@ public class MecanumDriveTrain {
         leftBack.setDirection(DcMotorSimple.Direction.FORWARD);
 
         status("Direction");
+
+        sensorDistance = linearOpMode.hardwareMap.servo.get(UniversalConstants.sensorDistanceServo);
+        colorDistanceServo = linearOpMode.hardwareMap.servo.get(UniversalConstants.colorDistanceAutonomousServo);
+
 
         if (useImu) {
             BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -813,6 +824,26 @@ public class MecanumDriveTrain {
         double offAngle = getRawHeading() - targetHeading;
         double P_VALUE = .015;
         translateBy(0, horizontal, offAngle * P_VALUE);
+    }
+
+    public void strafeToDistance(double power, double dist, DistanceUnit unit){
+        //while the robot's position is not the certain amount of distance from the white tape
+        // use the color distance sensor to find the distance
+        double error = dist - sensorDistance.getDistance(unit);
+        while(opModeIsActive() && Math.abs(error) > .5 ){
+            error = dist - sensorDistance.getDistance(unit);
+            translateBy(0, -power, 0);
+        }
+        park();
+    }
+
+    public void swingColorDistanceUp(){
+        colorDistanceServo.setPosition(UniversalConstants.colorDistanceServoUp);
+
+    }
+
+    public void swingColorDistanceDown(){
+        colorDistanceServo.setPosition(UniversalConstants.ColorDistanceServoDown);
     }
 
 }
