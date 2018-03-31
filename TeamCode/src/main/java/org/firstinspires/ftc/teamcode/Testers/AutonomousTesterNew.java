@@ -59,10 +59,10 @@ public class AutonomousTesterNew extends LinearOpMode {
                         robot.driveTrain.swingColorDistanceDown();
                     }
                 }),
-                new ActionType("Strafe to 3cm", new Runnable() {
+                new ActionType("Strafe to 10cm", new Runnable() {
                     @Override
                     public void run() {
-                        double distance = 3;
+                        double distance = 10;
                         robot.driveTrain.strafeToDistance(.2, distance, DistanceUnit.CM);
                     }
                 }),
@@ -103,6 +103,7 @@ public class AutonomousTesterNew extends LinearOpMode {
                     position += 1;
                 }
                 position = (position + actions.length) % actions.length;
+                telemetry.addData("Color Distance Reading (cm)", robot.driveTrain.sensorDistance.getDistance(DistanceUnit.CM));
                 telemetry.addData("Chosen Task", actions[position].name);
                 telemetry.update();
             }

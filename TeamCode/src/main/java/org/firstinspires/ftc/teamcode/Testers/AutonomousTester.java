@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.RobotModules.Robot;
 
 import java.util.Locale;
 
-//@Disabled
+@Disabled
 @Autonomous(name = "Auto Tester")
 public class AutonomousTester extends LinearOpMode {
     @Override

@@ -23,6 +23,7 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
         robot.vuforiaRelicRecoveryGetter.activateTrackables();
         vuMark = robot.vuforiaRelicRecoveryGetter.getPattern();
         robot.relicMecanism.swingElbowUp();
+        robot.driveTrain.swingColorDistanceDown();
         robot.jewelSwatter.removeJewelOfColor(color);
         AutonomousUtil.driveRobotOffRamp(robot, AutonomousUtil.AllianceColor.Red);
 
@@ -36,57 +37,51 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
 
         robot.driveTrain.gyroTurn(.05, targetAngle);
 
-        robot.driveTrain.moveToPositionInches(-2.5, .2);
+        robot.driveTrain.moveToPositionInches(-3.5, .2);
         double startTime;
         // deploy color distance sensor
-        double power = .2;
-        double distance = 3;
+        double power = .125;
+        double distance = 9;
         DistanceUnit unit = DistanceUnit.CM;
 
         switch (vuMark) {
             case LEFT:
-                // strafe to the left at [some power] until distance is at [a critical value] <- parameter
-                // A method strafeToDistance(double power, double distance, DistanceUnit unit)
-
-                for(int i = 0; i < 3; i++) {
+                for (int i = 0; i < 2; i++) {
                     robot.driveTrain.strafeToDistance(power, distance, unit);
                     robot.driveTrain.swingColorDistanceUp();
-                    sleep(300);
+                    sleep(500);
+                    //robot.driveTrain.translateBy();
                     robot.driveTrain.swingColorDistanceDown();
                 }
-
+                robot.driveTrain.strafeToDistance(power, distance, unit);
                 robot.driveTrain.park();
-
                 break;
             case CENTER:
-                for(int i = 0; i < 2; i++) {
+                for (int i = 0; i < 1; i++) {
                     robot.driveTrain.strafeToDistance(power, distance, unit);
                     robot.driveTrain.swingColorDistanceUp();
-                    sleep(300);
+                    sleep(500);
                     robot.driveTrain.swingColorDistanceDown();
                 }
+                robot.driveTrain.strafeToDistance(power, distance, unit);
                 robot.driveTrain.park();
-
                 break;
             case RIGHT:
             default:
-                for(int i = 0; i < 1; i++) {
-                    robot.driveTrain.strafeToDistance(power, distance, unit);
-                    robot.driveTrain.swingColorDistanceUp();
-                    sleep(300);
-                    robot.driveTrain.swingColorDistanceDown();
-                }
+                robot.driveTrain.strafeToDistance(power, distance, unit);
                 robot.driveTrain.park();
                 break;
         }
+
+        robot.driveTrain.storeColorDistance();
         robot.intakeMecanism.outtakeSlowly();
         robot.intakeMecanism.outtake();
 
-        robot.driveTrain.moveToInches(5, .25);
-        robot.driveTrain.moveToInches(-5, .25);
-        robot.driveTrain.moveToInches(5, .25);
-        robot.driveTrain.moveToInches(-10, .5);
+        robot.driveTrain.moveToInches(7, .25);
+        robot.driveTrain.moveToInches(-10, .25);
         robot.intakeMecanism.stopIntake();
+
+        /*
         robot.driveTrain.gyroTurn(.25, 90);
         robot.driveTrain.gyroTurn(.07, 90);
         switch (vuMark) {
@@ -111,6 +106,7 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
             robot.driveTrain.assistedStrafe(1, 0);
         }
         robot.driveTrain.park();
+        */
 
     }
 }

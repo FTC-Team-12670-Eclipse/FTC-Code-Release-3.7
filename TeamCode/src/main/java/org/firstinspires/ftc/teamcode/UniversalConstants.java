@@ -48,7 +48,7 @@ public class UniversalConstants {
 
 
     public static final double jewelElbowStored = 1; // .3 for robot 1
-    public static final double jewelElbowCenter = .35+.28; // .25 for robot 1;
+    public static final double jewelElbowCenter = .35 + .28; // .25 for robot 1;
     public static final double jewelElbowScoreLeft = jewelElbowCenter - .12; // .17 for robot 1;
     public static final double jewelElbowScoreRight = jewelElbowCenter + .12; // .32 for robot 1;
     public static final double jewelElbowForwards = .2;
@@ -101,14 +101,15 @@ public class UniversalConstants {
     private static double relicChainRatio = 1;
     private static double relicMotorRotations = requiredSpoolRotations / relicChainRatio;
     private static double excess = 1.0;
-    public static final int relicMotorLimit = (int) (excess*(ticksPerMotorRotation * relicMotorRotations));
+    public static final int relicMotorLimit = (int) (excess * (ticksPerMotorRotation * relicMotorRotations));
 
     public static final String distanceSensorLeft = "dsl";
     public static final String distanceSensorRight = "dsr";
 
     public static final String colorDistanceAutonomousServo = "cds";
-    public static final double colorDistanceServoUp = 0;
-    public static final double ColorDistanceServoDown = 0;
+    public static final double colorDistanceServoStored = 0;
+    public static final double colorDistanceServoUp = .4;
+    public static final double ColorDistanceServoDown = .9;
 
     public static final String vuforiaLicenceKey = "AfVNPjT/////AAAAGWxt1A0qnE/0ubDxBQVByN5Rb1GNo+3vvrqiIVpsnNHDWKyEcVhuKt6W/wPMw/0/wJh0iMnrWM+HddaZeSV8uGaUacthmkOT/xVt/+A+hlgt+3rIkDKkAYfIOw/DCK/RNY5U1LWCFSPGdjt5w3BQEg3iOEWzuhyovpBn+UlS56UhH6q5wP9qz9PpabM1Q7IW9MoYUGKTsiiLCQbB7ICHckbAQQBU1WJQdD3fAGnOOM0Dh1yjtOBlU3+kFZQOxKXNiVr5xxAZm903atvnT179VaATgl8U2yN9IW6h9gZ8tghlubFyeLRSiMaOrv/0gYchtBHH51WBJEsy2Tv2rzt403b4QMuZE5zQTRiZPJuJn83L";
     private static VuforiaLocalizer.CameraDirection selfieCam = VuforiaLocalizer.CameraDirection.FRONT;

@@ -71,11 +71,12 @@ public class EverythingTester extends LinearOpMode {
                 hardwareMap.servo.get(UniversalConstants.relicPincher),
                 hardwareMap.servo.get(UniversalConstants.dunkerServo),
                 hardwareMap.servo.get(UniversalConstants.intakeFoldOutLeft),
-                hardwareMap.servo.get(UniversalConstants.intakeFoldOutRight)
+                hardwareMap.servo.get(UniversalConstants.intakeFoldOutRight),
+                hardwareMap.servo.get(UniversalConstants.colorDistanceAutonomousServo)
         };
         //normal servo name array
         String[] normalServoName = {"Jewel Gimble Elbow", "Jewel Gimble Wrist",
-                "Relic Elbow", "Relic Pincher", "Slam Dunker", "Intake Fold Out Left", "Intake Fold Out Right"};
+                "Relic Elbow", "Relic Pincher", "Slam Dunker", "Intake Fold Out Left", "Intake Fold Out Right", "Distance Servo"};
 
         int normalServoArrayPosition = 0;
 
