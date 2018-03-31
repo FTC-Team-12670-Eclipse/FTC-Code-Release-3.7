@@ -41,7 +41,7 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
         // deploy color distance sensor
         double power = .2;
         double distance = 3;
-        DistanceUnit unit = DistanceUnit.CM
+        DistanceUnit unit = DistanceUnit.CM;
 
         switch (vuMark) {
             case LEFT:
@@ -49,7 +49,7 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
                 // A method strafeToDistance(double power, double distance, DistanceUnit unit)
 
                 for(int i = 0; i < 3; i++) {
-                    robot.driveTrain.strafeToDistance(power, distance, unit)
+                    robot.driveTrain.strafeToDistance(power, distance, unit);
                     robot.driveTrain.swingColorDistanceUp();
                     sleep(300);
                     robot.driveTrain.swingColorDistanceDown();
@@ -60,7 +60,7 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
                 break;
             case CENTER:
                 for(int i = 0; i < 2; i++) {
-                    robot.driveTrain.strafeToDistance(power, distance, unit)
+                    robot.driveTrain.strafeToDistance(power, distance, unit);
                     robot.driveTrain.swingColorDistanceUp();
                     sleep(300);
                     robot.driveTrain.swingColorDistanceDown();
@@ -71,7 +71,7 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
             case RIGHT:
             default:
                 for(int i = 0; i < 1; i++) {
-                    robot.driveTrain.strafeToDistance(power, distance, unit)
+                    robot.driveTrain.strafeToDistance(power, distance, unit);
                     robot.driveTrain.swingColorDistanceUp();
                     sleep(300);
                     robot.driveTrain.swingColorDistanceDown();

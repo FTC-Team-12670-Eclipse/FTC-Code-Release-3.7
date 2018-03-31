@@ -87,21 +87,19 @@ public class AutonomousTester extends LinearOpMode {
                     robot.driveTrain.strafeToPositionInches(10, 1);
                     break;
                 case 5:
-                    robot.strafeToJewelSensedDistance(-.15, 10);
+                    robot.driveTrain.swingColorDistanceDown();
                     break;
                 case 6:
-                    robot.jewelSwatter.moveJewelToForwards();
+                    robot.driveTrain.swingColorDistanceUp();
                     break;
                 case 7:
-                    robot.strafeToJewelSensedDistance(-.15, 10, false);
-                    //false parameter gives early exit to function, and doesn't park
-                    robot.jewelSwatter.moveJewelForwardsAway();
-                    sleep(750);
-                    robot.jewelSwatter.moveJewelToForwards();
-                    robot.strafeToJewelSensedDistance(-.15, 10, true);
-                    robot.strafeToJewelSensedDistance(-.15, 10, true);
-                    robot.strafeToJewelSensedDistance(-.15, 10, true);
-                    //true parameter gives late exit to function, error based exit to function with parking
+                    double power = .2;
+                    double distance = 3;
+                    DistanceUnit unit = DistanceUnit.CM;
+                    robot.driveTrain.strafeToDistance(power, distance, unit);
+                    robot.driveTrain.swingColorDistanceUp();
+                    sleep(300);
+                    robot.driveTrain.swingColorDistanceDown();
                     break;
                 case 8:
                     robot.jewelSwatter.removeJewel(AutonomousUtil.AllianceColor.Red);

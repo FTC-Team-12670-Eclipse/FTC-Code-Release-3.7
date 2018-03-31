@@ -204,22 +204,27 @@ public class Robot {
     }
 
 
+    @Deprecated
     public void strafeToJewelSensedDistance(double power, double distance, double targetHeading, boolean park) {
         strafeToJewelSensedDistance(power, distance, targetHeading, DistanceUnit.CM, park);
     }
 
+    @Deprecated
     public void strafeToJewelSensedDistance(double power, double distance, DistanceUnit distanceUnit, boolean park) {
         strafeToJewelSensedDistance(power, distance, driveTrain.getHeading(), distanceUnit, park);
     }
 
+    @Deprecated
     public void strafeToJewelSensedDistance(double power, double distance, boolean park) {
         strafeToJewelSensedDistance(power, distance, driveTrain.getHeading(), DistanceUnit.CM, park);
     }
 
+    @Deprecated
     public void strafeToJewelSensedDistance(double power, double distance) {
         strafeToJewelSensedDistance(power, distance, driveTrain.getHeading(), DistanceUnit.CM, true);
     }
 
+    @Deprecated
     public void strafeToJewelSensedDistance(double power, double targetDistance, double targetHeading, DistanceUnit distanceUnit, boolean park) {
         jewelSwatter.moveJewelToForwards();
         double dist = jewelSwatter.sensorDistance.getDistance(distanceUnit);
