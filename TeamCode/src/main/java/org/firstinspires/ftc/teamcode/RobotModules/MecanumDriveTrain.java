@@ -89,7 +89,6 @@ public class MecanumDriveTrain {
         sensorDistance = linearOpMode.hardwareMap.get(DistanceSensor.class, UniversalConstants.sensorDistanceServo);
         colorDistanceServo = linearOpMode.hardwareMap.servo.get(UniversalConstants.colorDistanceAutonomousServo);
 
-
         if (useImu) {
             BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
             parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
