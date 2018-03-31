@@ -40,8 +40,8 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
         robot.driveTrain.moveToPositionInches(-3.5, .2);
         double startTime;
         // deploy color distance sensor
-        double power = .125;
-        double distance = 9;
+        double power = .10;
+        double distance = 7;
         DistanceUnit unit = DistanceUnit.CM;
 
         switch (vuMark) {
@@ -77,6 +77,9 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
         robot.intakeMecanism.outtakeSlowly();
         robot.intakeMecanism.outtake();
 
+        robot.driveTrain.moveToInches(7, .25);
+        robot.driveTrain.moveToInches(-7, .25);
+        sleep(250);
         robot.driveTrain.moveToInches(7, .25);
         robot.driveTrain.moveToInches(-10, .25);
         robot.intakeMecanism.stopIntake();

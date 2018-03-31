@@ -843,7 +843,7 @@ public class MecanumDriveTrain {
         if (Double.isNaN(error)) {
             error = -100;
         }
-        while (opModeIsActive() && Math.abs(error) > 1.25) {
+        while (opModeIsActive() && Math.abs(error) > .75) {
             error = dist - sensorDistance.getDistance(unit);
             if (Double.isNaN(error)) {
                 error = -100;
