@@ -89,7 +89,6 @@ public class MecanumDriveTrain {
         sensorDistance = linearOpMode.hardwareMap.get(DistanceSensor.class, UniversalConstants.sensorDistanceServo);
         colorDistanceServo = linearOpMode.hardwareMap.servo.get(UniversalConstants.colorDistanceAutonomousServo);
 
-
         if (useImu) {
             BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
             parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
@@ -826,23 +825,23 @@ public class MecanumDriveTrain {
         translateBy(0, horizontal, offAngle * P_VALUE);
     }
 
-    public void strafeToDistance(double power, double dist, DistanceUnit unit){
+    public void strafeToDistance(double power, double dist, DistanceUnit unit) {
         //while the robot's position is not the certain amount of distance from the white tape
         // use the color distance sensor to find the distance
         double error = dist - sensorDistance.getDistance(unit);
-        while(opModeIsActive() && Math.abs(error) > .5 ){
+        while (opModeIsActive() && Math.abs(error) > .5) {
             error = dist - sensorDistance.getDistance(unit);
             translateBy(0, -power, 0);
         }
         park();
     }
 
-    public void swingColorDistanceUp(){
+    public void swingColorDistanceUp() {
         colorDistanceServo.setPosition(UniversalConstants.colorDistanceServoUp);
 
     }
 
-    public void swingColorDistanceDown(){
+    public void swingColorDistanceDown() {
         colorDistanceServo.setPosition(UniversalConstants.ColorDistanceServoDown);
     }
 

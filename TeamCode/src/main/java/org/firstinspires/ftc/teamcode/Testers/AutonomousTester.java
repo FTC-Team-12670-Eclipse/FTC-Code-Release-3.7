@@ -43,22 +43,22 @@ public class AutonomousTester extends LinearOpMode {
                         modeName = "robot.driveTrain.moveToPositionInches(-10, -.1);";
                         break;
                     case 3:
-                        modeName = "robot.driveTrain.gyroTurn(.125, 0);";
+                        modeName = "robot.driveTrain.strafeToPositionInches(10, 1);";
                         break;
                     case 4:
-                        modeName = "robot.driveTrain.gyroTurn(.25, 0);";
+                        modeName = "robot.driveTrain.strafeToPositionInches(10, -1);";
                         break;
                     case 5:
-                        modeName = "robot.strafeToJewelSensedDistance(.15, 10);";
+                        modeName = "robot.driveTrain.swingColorDistanceDown();";
                         break;
                     case 6:
-                        modeName = "jewel to forwards";
+                        modeName = "robot.driveTrain.swingColorDistanceUp();";
                         break;
                     case 7:
-                        modeName = "skip column go left";
+                        modeName = "Skip a Single Column";
                         break;
                     case 8:
-                        modeName = "swat red jewel";
+                        modeName = "robot.jewelSwatter.removeJewel(AutonomousUtil.AllianceColor.Red);";
                         break;
                     default:
                         modeName = "no set mode";
@@ -73,6 +73,7 @@ public class AutonomousTester extends LinearOpMode {
                 robot.vuforiaRelicRecoveryGetter.updateTelemetry();
                 telemetry.update();
             }
+
             switch (mode + 1) {
                 case 1:
                     robot.driveTrain.moveToPositionInches(10, 1);
@@ -100,6 +101,8 @@ public class AutonomousTester extends LinearOpMode {
                     robot.driveTrain.swingColorDistanceUp();
                     sleep(300);
                     robot.driveTrain.swingColorDistanceDown();
+                    robot.driveTrain.strafeToDistance(power, distance, unit);
+                    robot.driveTrain.park();
                     break;
                 case 8:
                     robot.jewelSwatter.removeJewel(AutonomousUtil.AllianceColor.Red);
