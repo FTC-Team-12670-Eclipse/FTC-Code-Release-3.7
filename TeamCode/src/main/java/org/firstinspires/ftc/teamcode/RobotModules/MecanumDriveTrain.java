@@ -535,12 +535,18 @@ public class MecanumDriveTrain {
             if (percent < percentToRamp) {
                 instantPower = slowestPower + ((maxPower - slowestPower) / percentToRamp) * (percent);
                 //f1(x) on desmos
+                /*for the first 1/4 of the duration of it's run, the robot will move according to the
+                    f1 graph on the desmos file.  This is when the graph is gradually increasing.
+                */
             } else if (percent > (1 - percentToRamp)) {
                 instantPower = slowestPower + ((maxPower - slowestPower) / percentToRamp) * (1 - percent);
                 //f3(x) on desmos
+                //This is the last quarter of the graph, the robot will move at a gradually decreasing speed
             } else {
                 instantPower = maxPower;
                 //f2(x) on desmos
+                //this is the middle half of the graph when the robot moves at a constant speed
+                //This is the fastest that the robot travels in the entire run
             }
 
             //A model for the math for this scaling algorithm can be found at https://www.desmos.com/calculator/lsjhykndca
@@ -826,23 +832,23 @@ public class MecanumDriveTrain {
         translateBy(0, horizontal, offAngle * P_VALUE);
     }
 
-    public void strafeToDistance(double power, double dist, DistanceUnit unit){
+    public void strafeToDistance(double power, double dist, DistanceUnit unit) {
         //while the robot's position is not the certain amount of distance from the white tape
         // use the color distance sensor to find the distance
         double error = dist - sensorDistance.getDistance(unit);
-        while(opModeIsActive() && Math.abs(error) > .5 ){
+        while (opModeIsActive() && Math.abs(error) > .5) {
             error = dist - sensorDistance.getDistance(unit);
             translateBy(0, -power, 0);
         }
         park();
     }
 
-    public void swingColorDistanceUp(){
+    public void swingColorDistanceUp() {
         colorDistanceServo.setPosition(UniversalConstants.colorDistanceServoUp);
 
     }
 
-    public void swingColorDistanceDown(){
+    public void swingColorDistanceDown() {
         colorDistanceServo.setPosition(UniversalConstants.ColorDistanceServoDown);
     }
 
