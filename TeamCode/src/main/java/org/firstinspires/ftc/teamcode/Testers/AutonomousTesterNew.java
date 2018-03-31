@@ -23,6 +23,7 @@ public class AutonomousTesterNew extends LinearOpMode {
             name = actionName;
             action = actionAction;
         }
+
     }
 
     @Override
@@ -103,6 +104,7 @@ public class AutonomousTesterNew extends LinearOpMode {
                 }
                 position = (position + actions.length) % actions.length;
                 telemetry.addData("Chosen Task", actions[position].name);
+                telemetry.update();
             }
 
             actions[position].action.run();
