@@ -30,7 +30,7 @@ public class EverythingTester extends LinearOpMode {
             2 servos for jewel swatter (controlled by position) (normal)
             2 servos for the relic (controlled by position) (normal)
             1 servo for slam dunk, it pinches stuff (normal)
-            for the two days, no color sensor stuff
+
         */
         /* controller stuff:
             gamepad 1 for motors
@@ -45,6 +45,8 @@ public class EverythingTester extends LinearOpMode {
 
          */
         //motors initial stuff
+
+        //this is making an array for controller 1 in which there are all the motors
         Controller controller1 = new Controller(gamepad1);
         DcMotor[] motors = {hardwareMap.dcMotor.get(UniversalConstants.leftFrontDrive),
                 hardwareMap.dcMotor.get(UniversalConstants.rightFrontDrive),
@@ -55,13 +57,14 @@ public class EverythingTester extends LinearOpMode {
                 hardwareMap.dcMotor.get(UniversalConstants.intakeMotorLeft),
                 hardwareMap.dcMotor.get(UniversalConstants.intakeMotorRight)
         };
+        //This is what will be printed on the phone when you scroll through the array
         String[] motorName = {"Left Front", "Right Front", "Left Back", "Right Back",
                 "Slam Dunk", "Relic Motor", "Intake Left", "Intake Right"};
 
         int motorArrayPosition = 0;
 
         //servos initial stuff
-
+        //this is making an array for controller 2 in which there are all the servos
         Controller controller2 = new Controller(gamepad2);
         //normal servo array
         Servo[] normalServos = {
@@ -75,6 +78,7 @@ public class EverythingTester extends LinearOpMode {
                 hardwareMap.servo.get(UniversalConstants.colorDistanceAutonomousServo)
         };
         //normal servo name array
+        //This is what will be printed on teh phone when you scroll through the array
         String[] normalServoName = {"Jewel Gimble Elbow", "Jewel Gimble Wrist",
                 "Relic Elbow", "Relic Pincher", "Slam Dunker", "Intake Fold Out Left", "Intake Fold Out Right", "Distance Servo"};
 
