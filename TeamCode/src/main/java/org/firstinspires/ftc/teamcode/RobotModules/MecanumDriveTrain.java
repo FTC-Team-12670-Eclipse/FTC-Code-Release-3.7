@@ -86,7 +86,7 @@ public class MecanumDriveTrain {
 
         status("Direction");
 
-        sensorDistance = linearOpMode.hardwareMap.servo.get(UniversalConstants.sensorDistanceServo);
+        sensorDistance = linearOpMode.hardwareMap.get(DistanceSensor.class, UniversalConstants.sensorDistanceServo);
         colorDistanceServo = linearOpMode.hardwareMap.servo.get(UniversalConstants.colorDistanceAutonomousServo);
 
 
