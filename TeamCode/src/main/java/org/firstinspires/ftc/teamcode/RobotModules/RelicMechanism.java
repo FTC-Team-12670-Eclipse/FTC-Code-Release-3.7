@@ -47,6 +47,14 @@ public class RelicMechanism {
         pincherServo.setPosition(UniversalConstants.relicPincherPinched);
     }
 
+    public void closePinchServo() {
+        pincherServo.setPosition(UniversalConstants.relicPincherPinched);
+    }
+
+    public void openPinchServo() {
+        pincherServo.setPosition(UniversalConstants.relicPincherFullyOpen);
+    }
+
     public void updateAll() {
         updateByGamepad();
         updateTelemetry();
@@ -90,7 +98,7 @@ public class RelicMechanism {
             pincherServo.setPosition(Range.clip(pincherServo.getPosition() - 2 * servoMoveSpeed, UniversalConstants.relicPincherPinched, UniversalConstants.relicPincherFullyOpen));
         }
 
-        if(linearOpMode.gamepad2.x){
+        if (linearOpMode.gamepad2.x) {
             storeServos();
         }
 

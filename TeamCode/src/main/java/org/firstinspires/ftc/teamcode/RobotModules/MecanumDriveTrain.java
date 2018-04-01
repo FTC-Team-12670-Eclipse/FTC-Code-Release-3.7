@@ -836,6 +836,10 @@ public class MecanumDriveTrain {
     }
 
     public void strafeToDistance(double power, double dist, DistanceUnit unit) {
+        strafeToDistance(power, dist, getHeading(), unit);
+    }
+
+    public void strafeToDistance(double power, double dist, double targetHeading, DistanceUnit unit) {
         swingColorDistanceDown();
         //while the robot's position is not the certain amount of distance from the white tape
         // use the color distance sensor to find the distance
@@ -848,12 +852,37 @@ public class MecanumDriveTrain {
             if (Double.isNaN(error)) {
                 error = -100;
             }
-            translateBy(0, Math.signum(error) * power, 0);
+            assistedStrafe(Math.signum(error) * power, targetHeading);
             telemetry.addLine("Moving");
             telemetry.update();
         }
-        //park();
     }
+
+
+    public void strafeToDistanceCoast(double power, double dist, double targetHeading, DistanceUnit unit) {
+        swingColorDistanceDown();
+        //while the robot's position is not the certain amount of distance from the white tape
+        // use the color distance sensor to find the distance
+        double error = dist - sensorDistance.getDistance(unit);
+        double lastError = error;
+        if (Double.isNaN(error)) {
+            error = -100;
+        }
+        while (opModeIsActive() && Math.abs(error) > .75) {
+            error = dist - sensorDistance.getDistance(unit);
+            if (error / lastError < 0) {
+                return;
+            }
+            if (Double.isNaN(error)) {
+                error = -100;
+            }
+            assistedStrafe(Math.signum(error) * power, targetHeading);
+            lastError = error;
+            telemetry.addLine("Moving");
+            telemetry.update();
+        }
+    }
+
 
     public void swingColorDistanceUp() {
         colorDistanceServo.setPosition(UniversalConstants.colorDistanceServoUp);
@@ -865,6 +894,34 @@ public class MecanumDriveTrain {
 
     public void storeColorDistance() {
         colorDistanceServo.setPosition(UniversalConstants.colorDistanceServoStored);
+    }
+
+    /*
+    Distance is positive: Go left
+     */
+    public void strafeToInches(double distance, double power) {
+        double timeout = linearOpMode.getRuntime() + ((.25 / power) * Math.abs(distance) / 4);
+        power = Math.abs(power);
+        double target = getOverallPosition() + distance * UniversalConstants.ticksPerInch;
+        double accuracyToTheInch = .75;
+        double accuracyInTicks = UniversalConstants.ticksPerInch * accuracyToTheInch;
+        double error = Math.abs(target - getOverallPosition());
+        double lastError = error;
+        while (opModeIsActive() && (linearOpMode.getRuntime() < timeout) && (error > accuracyInTicks)) {
+            error = Math.abs(target - getOverallPosition());
+            if (lastError / error < 0) {
+                return;
+            }
+            if (target > getOverallPosition()) {
+                translateBy(0, -power, 0);
+            } else {
+                translateBy(0, power, 0);
+            }
+            lastError = error;
+            linearOpMode.idle();
+            updateTelemetry();
+            telemetry.update();
+        }
     }
 
 }
