@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.RobotModules.Robot;
 
 @Autonomous(name = "Red CLOSE Color")
-public class AutonomousCloseIntakeRedNew extends LinearOpMode {
+public class AutonomousCloseIntakeRedColor extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
