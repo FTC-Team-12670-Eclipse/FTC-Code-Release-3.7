@@ -48,24 +48,24 @@ public class AutonomousFarIntakeRedNew extends LinearOpMode {
         switch (vuMark) {
             case LEFT:
                 robot.driveTrain.swingColorDistanceDown();
-                robot.driveTrain.strafeToDistanceCoast(power*STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
+                robot.driveTrain.strafeToDistanceLeftCoast(power*STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
                 robot.driveTrain.translateBy(0, -power*STRAFE_SPEED_MODIFIER, 0);
                 robot.driveTrain.swingColorDistanceUp();
-                robot.driveTrain.strafeToInches(1.5*STRAFE_SPEED_MODIFIER, power);
+                robot.driveTrain.encoderStrafeToInches(1.5*STRAFE_SPEED_MODIFIER, power);
                 robot.driveTrain.swingColorDistanceDown();
             case CENTER:
                 robot.driveTrain.swingColorDistanceDown();
-                robot.driveTrain.strafeToDistanceCoast(power*STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
+                robot.driveTrain.strafeToDistanceLeftCoast(power*STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
                 robot.driveTrain.translateBy(0, -power*STRAFE_SPEED_MODIFIER, 0);
                 robot.driveTrain.swingColorDistanceUp();
-                robot.driveTrain.strafeToInches(1.5, power*STRAFE_SPEED_MODIFIER);
+                robot.driveTrain.encoderStrafeToInches(1.5, power*STRAFE_SPEED_MODIFIER);
                 robot.driveTrain.swingColorDistanceDown();
             case RIGHT:
             default:
                 robot.driveTrain.park();
                 robot.driveTrain.gyroTurn(.05*TURN_SPEED_MODIFIER, targetAngle);
                 robot.driveTrain.swingColorDistanceDown();
-                robot.driveTrain.strafeToDistance(power*STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
+                robot.driveTrain.strafeToDistanceLeft(power*STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
                 robot.driveTrain.park();
                 break;
         }

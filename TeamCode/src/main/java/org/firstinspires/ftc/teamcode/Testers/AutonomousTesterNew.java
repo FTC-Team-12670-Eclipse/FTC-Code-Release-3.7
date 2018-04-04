@@ -9,8 +9,6 @@ import org.firstinspires.ftc.teamcode.AutonomousUtil;
 import org.firstinspires.ftc.teamcode.Controller;
 import org.firstinspires.ftc.teamcode.RobotModules.Robot;
 
-import java.util.Locale;
-
 //@Disabled
 @Autonomous(name = "Auto Tester New")
 public class AutonomousTesterNew extends LinearOpMode {
@@ -63,14 +61,14 @@ public class AutonomousTesterNew extends LinearOpMode {
                     @Override
                     public void run() {
                         double distance = 10;
-                        robot.driveTrain.strafeToDistance(.2, distance, DistanceUnit.CM);
+                        robot.driveTrain.strafeToDistanceLeft(.2, distance, DistanceUnit.CM);
                     }
                 }),
                 new ActionType("Strafe to 6cm", new Runnable() {
                     @Override
                     public void run() {
                         double distance = 6;
-                        robot.driveTrain.strafeToDistance(.2, distance, DistanceUnit.CM);
+                        robot.driveTrain.strafeToDistanceLeft(.2, distance, DistanceUnit.CM);
                     }
                 }),
                 new ActionType("Swat Red Jewel", new Runnable() {
@@ -103,7 +101,8 @@ public class AutonomousTesterNew extends LinearOpMode {
                     position += 1;
                 }
                 position = (position + actions.length) % actions.length;
-                telemetry.addData("Color Distance Reading (cm)", robot.driveTrain.sensorDistance.getDistance(DistanceUnit.CM));
+                telemetry.addData("Color Distance Reading Left (cm)", robot.driveTrain.leftSensorDistance.getDistance(DistanceUnit.CM));
+                telemetry.addData("Color Distance Reading Right (cm)", robot.driveTrain.rightSensorDistance.getDistance(DistanceUnit.CM));
                 telemetry.addData("Chosen Task", actions[position].name);
                 telemetry.update();
             }

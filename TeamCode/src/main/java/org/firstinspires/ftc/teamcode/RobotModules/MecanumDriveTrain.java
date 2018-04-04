@@ -2,8 +2,8 @@ package org.firstinspires.ftc.teamcode.RobotModules;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
-import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -13,7 +13,6 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.matrices.MatrixF;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -22,8 +21,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.UniversalConstants;
 
 import java.util.Arrays;
-
-import static java.lang.Runtime.getRuntime;
 
 public class MecanumDriveTrain {
     private Telemetry telemetry;
@@ -35,7 +32,10 @@ public class MecanumDriveTrain {
 
     private VoltageSensor voltageSensor;
 
-    public DistanceSensor sensorDistance = null;
+    public DistanceSensor leftSensorDistance;
+    public DistanceSensor rightSensorDistance;
+    public ColorSensor leftSensorColor;
+    public ColorSensor rightSensorColor;
 
     enum DriveMode {
         NORMAL_SPEED, SLOW_MODE, RELIC_SLOW
@@ -86,7 +86,13 @@ public class MecanumDriveTrain {
 
         status("Direction");
 
-        sensorDistance = linearOpMode.hardwareMap.get(DistanceSensor.class, UniversalConstants.sensorDistanceServo);
+        leftSensorDistance = linearOpMode.hardwareMap.get(DistanceSensor.class, UniversalConstants.leftSensorDistanceServo);
+        rightSensorDistance = linearOpMode.hardwareMap.get(DistanceSensor.class, UniversalConstants.rightSensorDistanceServo);
+        leftSensorColor = linearOpMode.hardwareMap.get(ColorSensor.class, UniversalConstants.leftSensorDistanceServo);
+        rightSensorColor = linearOpMode.hardwareMap.get(ColorSensor.class, UniversalConstants.rightSensorDistanceServo);
+        leftSensorColor.enableLed(true);
+        rightSensorColor.enableLed(true);
+
         colorDistanceServo = linearOpMode.hardwareMap.servo.get(UniversalConstants.colorDistanceAutonomousServo);
 
         colorDistanceServo.setPosition(UniversalConstants.colorDistanceServoStored);
@@ -835,20 +841,20 @@ public class MecanumDriveTrain {
         translateBy(0, horizontal, offAngle * P_VALUE);
     }
 
-    public void strafeToDistance(double power, double dist, DistanceUnit unit) {
-        strafeToDistance(power, dist, getHeading(), unit);
+    public void strafeToDistanceLeft(double power, double dist, DistanceUnit unit) {
+        strafeToDistanceLeft(power, dist, getHeading(), unit);
     }
 
-    public void strafeToDistance(double power, double dist, double targetHeading, DistanceUnit unit) {
+    public void strafeToDistanceLeft(double power, double dist, double targetHeading, DistanceUnit unit) {
         swingColorDistanceDown();
         //while the robot's position is not the certain amount of distance from the white tape
         // use the color distance sensor to find the distance
-        double error = dist - sensorDistance.getDistance(unit);
+        double error = dist - leftSensorDistance.getDistance(unit);
         if (Double.isNaN(error)) {
             error = -100;
         }
         while (opModeIsActive() && Math.abs(error) > .75) {
-            error = dist - sensorDistance.getDistance(unit);
+            error = dist - leftSensorDistance.getDistance(unit);
             if (Double.isNaN(error)) {
                 error = -100;
             }
@@ -859,17 +865,17 @@ public class MecanumDriveTrain {
     }
 
 
-    public void strafeToDistanceCoast(double power, double dist, double targetHeading, DistanceUnit unit) {
+    public void strafeToDistanceLeftCoast(double power, double dist, double targetHeading, DistanceUnit unit) {
         swingColorDistanceDown();
         //while the robot's position is not the certain amount of distance from the white tape
         // use the color distance sensor to find the distance
-        double error = dist - sensorDistance.getDistance(unit);
+        double error = dist - leftSensorDistance.getDistance(unit);
         double lastError = error;
         if (Double.isNaN(error)) {
             error = -100;
         }
         while (opModeIsActive() && Math.abs(error) > .75) {
-            error = dist - sensorDistance.getDistance(unit);
+            error = dist - leftSensorDistance.getDistance(unit);
             if (error / lastError < 0) {
                 return;
             }
@@ -883,6 +889,53 @@ public class MecanumDriveTrain {
         }
     }
 
+    public void strafeToDistanceRight(double power, double dist, DistanceUnit unit) {
+        strafeToDistanceRight(power, dist, getHeading(), unit);
+    }
+
+    public void strafeToDistanceRight(double power, double dist, double targetHeading, DistanceUnit unit) {
+        swingColorDistanceDown();
+        //while the robot's position is not the certain amount of distance from the white tape
+        // use the color distance sensor to find the distance
+        double error = rightSensorDistance.getDistance(unit) - dist;
+        if (Double.isNaN(error)) {
+            error = 100;
+        }
+        while (opModeIsActive() && Math.abs(error) > .75) {
+            error = rightSensorDistance.getDistance(unit) - dist;
+            if (Double.isNaN(error)) {
+                error = 100;
+            }
+            assistedStrafe(Math.signum(error) * power, targetHeading);
+            telemetry.addLine("Moving");
+            telemetry.update();
+        }
+    }
+
+
+    public void strafeToDistanceRightCoast(double power, double dist, double targetHeading, DistanceUnit unit) {
+        swingColorDistanceDown();
+        //while the robot's position is not the certain amount of distance from the white tape
+        // use the color distance sensor to find the distance
+        double error = rightSensorDistance.getDistance(unit) - dist;
+        double lastError = error;
+        if (Double.isNaN(error)) {
+            error = 100;
+        }
+        while (opModeIsActive() && Math.abs(error) > .75) {
+            error = rightSensorDistance.getDistance(unit) - dist;
+            if (error / lastError < 0) {
+                return;
+            }
+            if (Double.isNaN(error)) {
+                error = 100;
+            }
+            assistedStrafe(Math.signum(error) * power, targetHeading);
+            lastError = error;
+            telemetry.addLine("Moving");
+            telemetry.update();
+        }
+    }
 
     public void swingColorDistanceUp() {
         colorDistanceServo.setPosition(UniversalConstants.colorDistanceServoUp);
@@ -899,7 +952,7 @@ public class MecanumDriveTrain {
     /*
     Distance is positive: Go left
      */
-    public void strafeToInches(double distance, double power) {
+    public void encoderStrafeToInches(double distance, double power) {
         double timeout = linearOpMode.getRuntime() + ((.25 / power) * Math.abs(distance) / 4);
         power = Math.abs(power);
         double target = getOverallPosition() + distance * UniversalConstants.ticksPerInch;

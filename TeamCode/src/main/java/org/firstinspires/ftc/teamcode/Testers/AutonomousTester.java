@@ -97,11 +97,11 @@ public class AutonomousTester extends LinearOpMode {
                     double power = .2;
                     double distance = 3;
                     DistanceUnit unit = DistanceUnit.CM;
-                    robot.driveTrain.strafeToDistance(power, distance, unit);
+                    robot.driveTrain.strafeToDistanceLeft(power, distance, unit);
                     robot.driveTrain.swingColorDistanceUp();
                     sleep(300);
                     robot.driveTrain.swingColorDistanceDown();
-                    robot.driveTrain.strafeToDistance(power, distance, unit);
+                    robot.driveTrain.strafeToDistanceLeft(power, distance, unit);
                     robot.driveTrain.park();
                     break;
                 case 8:
