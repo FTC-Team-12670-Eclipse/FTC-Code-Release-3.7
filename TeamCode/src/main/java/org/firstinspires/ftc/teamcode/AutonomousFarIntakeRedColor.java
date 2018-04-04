@@ -28,7 +28,6 @@ public class AutonomousFarIntakeRedColor extends LinearOpMode {
         vuMark = robot.vuforiaRelicRecoveryGetter.getPattern();
         robot.relicMecanism.swingElbowUp();
         robot.driveTrain.swingColorDistanceDown();
-        robot.intakeMecanism.deployFoldoutIntake();
         robot.jewelSwatter.removeJewelOfColor(color);
         AutonomousUtil.driveRobotOffRamp(robot, AutonomousUtil.AllianceColor.Red);
 
@@ -45,6 +44,7 @@ public class AutonomousFarIntakeRedColor extends LinearOpMode {
         double distance = 7;
         DistanceUnit unit = DistanceUnit.CM;
 
+
         switch (vuMark) {
             case LEFT:
                 robot.driveTrain.swingColorDistanceDown();
@@ -53,6 +53,7 @@ public class AutonomousFarIntakeRedColor extends LinearOpMode {
                 robot.driveTrain.swingColorDistanceUp();
                 robot.driveTrain.encoderStrafeToInches(1.5*STRAFE_SPEED_MODIFIER, power);
                 robot.driveTrain.swingColorDistanceDown();
+                break;
             case CENTER:
                 robot.driveTrain.swingColorDistanceDown();
                 robot.driveTrain.strafeToDistanceLeftCoast(power*STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
@@ -71,11 +72,14 @@ public class AutonomousFarIntakeRedColor extends LinearOpMode {
         }
 
         robot.driveTrain.storeColorDistance();
+
+        robot.driveTrain.moveToInches(3, .25 * FORWARDS_SPEED_MODIFIER);
+
+        robot.intakeMecanism.deployFoldoutIntake();
         robot.intakeMecanism.outtakeSlowly();
         robot.intakeMecanism.setIntakePowers(-.75);
 
-        robot.driveTrain.moveToInches(3, .25*FORWARDS_SPEED_MODIFIER);
-        robot.driveTrain.moveToInches(-7, .35*FORWARDS_SPEED_MODIFIER);
+        robot.driveTrain.moveToInches(-7, .35 * FORWARDS_SPEED_MODIFIER);
 
         robot.intakeMecanism.stopIntake();
         robot.relicMecanism.storeServos();

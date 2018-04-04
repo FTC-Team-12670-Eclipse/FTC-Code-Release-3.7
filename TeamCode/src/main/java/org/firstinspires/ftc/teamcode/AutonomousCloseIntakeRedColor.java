@@ -73,10 +73,13 @@ public class AutonomousCloseIntakeRedColor extends LinearOpMode {
         }
 
         robot.driveTrain.storeColorDistance();
+
+        robot.driveTrain.moveToInches(3, .25 * FORWARDS_SPEED_MODIFIER);
+
+        robot.intakeMecanism.deployFoldoutIntake();
         robot.intakeMecanism.outtakeSlowly();
         robot.intakeMecanism.setIntakePowers(-.75);
 
-        robot.driveTrain.moveToInches(3, .25 * FORWARDS_SPEED_MODIFIER);
         robot.driveTrain.moveToInches(-7, .35 * FORWARDS_SPEED_MODIFIER);
 
         robot.intakeMecanism.stopIntake();
