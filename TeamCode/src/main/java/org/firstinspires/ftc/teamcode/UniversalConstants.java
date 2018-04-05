@@ -90,6 +90,7 @@ public class UniversalConstants {
     public static final String relicPincher = "rp";
 
     public static final double relicElbowUp = .50;
+    public static final double relicElbowAwayFromWall = .37;
     public static final double relicElbowDown = 1;
     public static final double relicElbowStored = .11;
     public static final double relicPincherPinched = .35;

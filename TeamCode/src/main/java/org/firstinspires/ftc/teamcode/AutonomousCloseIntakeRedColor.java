@@ -32,6 +32,8 @@ public class AutonomousCloseIntakeRedColor extends LinearOpMode {
         robot.jewelSwatter.removeJewelOfColor(color);
         AutonomousUtil.driveRobotOffRamp(robot, AutonomousUtil.AllianceColor.Red);
 
+        robot.relicMecanism.swingAwayFromWall();
+
         if (vuMark == RelicRecoveryVuMark.UNKNOWN) {
             vuMark = robot.vuforiaRelicRecoveryGetter.getPattern();
         }

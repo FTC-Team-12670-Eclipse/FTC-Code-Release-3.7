@@ -65,6 +65,10 @@ public class RelicMechanism {
         pincherServo.setPosition(UniversalConstants.relicPincherFullyOpen);
     }
 
+    public void swingAwayFromWall() {
+        elbowServo.setPosition(UniversalConstants.relicElbowAwayFromWall);
+    }
+
     public void updateByGamepad() {
         int spoolOffsetPosition = UniversalConstants.relicMotorLimit / 12;
         controller1.update();

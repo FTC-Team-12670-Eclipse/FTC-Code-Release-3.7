@@ -57,20 +57,62 @@ public class AutonomousTesterNew extends LinearOpMode {
                         robot.driveTrain.swingColorDistanceDown();
                     }
                 }),
-                new ActionType("Strafe to 10cm", new Runnable() {
+                new ActionType("Strafe to 10cm Left", new Runnable() {
                     @Override
                     public void run() {
                         double distance = 10;
                         robot.driveTrain.strafeToDistanceLeft(.2, distance, DistanceUnit.CM);
                     }
                 }),
-                new ActionType("Strafe to 6cm", new Runnable() {
+                new ActionType("Strafe to 6cm Left", new Runnable() {
                     @Override
                     public void run() {
                         double distance = 6;
                         robot.driveTrain.strafeToDistanceLeft(.2, distance, DistanceUnit.CM);
                     }
                 }),
+                new ActionType("Strafe to 6cm Right", new Runnable() {
+                    @Override
+                    public void run() {
+                        double distance = 6;
+                        robot.driveTrain.strafeToDistanceRight(.2, distance, DistanceUnit.CM);
+                    }
+                }),
+                new ActionType("Encoder Strafe 6cm Right", new Runnable() {
+                    @Override
+                    public void run() {
+                        double distance = -6;
+                        robot.driveTrain.encoderStrafeToInches(distance, .25);
+                        robot.driveTrain.park();
+                    }
+                }),
+                new ActionType("Encoder Strafe 6cm Left", new Runnable() {
+                    @Override
+                    public void run() {
+                        double distance = 6;
+                        robot.driveTrain.encoderStrafeToInches(distance, .25);
+                        robot.driveTrain.park();
+                    }
+                }),
+
+                new ActionType("Skip a column while going Right", new Runnable() {
+                    double targetAngle = robot.driveTrain.getHeading();
+                    double power = .1;
+                    double distance = 7;
+                    DistanceUnit unit = DistanceUnit.CM;
+
+                    @Override
+                    public void run() {
+                        robot.driveTrain.swingColorDistanceDown();
+                        robot.driveTrain.strafeToDistanceRightCoast(power, distance, targetAngle, unit);
+                        robot.driveTrain.translateBy(0, power, 0);
+                        robot.driveTrain.swingColorDistanceUp();
+                        robot.driveTrain.encoderStrafeToInches(-1.5, power);
+                        robot.driveTrain.swingColorDistanceDown();
+                        robot.driveTrain.park();
+                    }
+                }),
+
                 new ActionType("Swat Red Jewel", new Runnable() {
                     @Override
                     public void run() {

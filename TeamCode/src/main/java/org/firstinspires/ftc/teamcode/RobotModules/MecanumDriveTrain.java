@@ -836,6 +836,9 @@ public class MecanumDriveTrain {
     }
 
     public void assistedStrafe(double horizontal, double targetHeading) {
+        if (targetHeading == 180 && getRawHeading() < 0) {
+            targetHeading = -180;
+        }
         double offAngle = getRawHeading() - targetHeading;
         double P_VALUE = .015;
         translateBy(0, horizontal, offAngle * P_VALUE);
@@ -862,6 +865,7 @@ public class MecanumDriveTrain {
             telemetry.addLine("Moving");
             telemetry.update();
         }
+        park();
     }
 
 
@@ -910,6 +914,7 @@ public class MecanumDriveTrain {
             telemetry.addLine("Moving");
             telemetry.update();
         }
+        park();
     }
 
 
@@ -917,20 +922,20 @@ public class MecanumDriveTrain {
         swingColorDistanceDown();
         //while the robot's position is not the certain amount of distance from the white tape
         // use the color distance sensor to find the distance
-        double error = rightSensorDistance.getDistance(unit) - dist;
+        double error = dist - rightSensorDistance.getDistance(unit);
         double lastError = error;
         if (Double.isNaN(error)) {
-            error = 100;
+            error = -100;
         }
         while (opModeIsActive() && Math.abs(error) > .75) {
-            error = rightSensorDistance.getDistance(unit) - dist;
-            if (error / lastError < 0) {
+            error = dist - rightSensorDistance.getDistance(unit);
+            if (error / lastError < 0 || error > 0) {
                 return;
             }
             if (Double.isNaN(error)) {
-                error = 100;
+                error = -100;
             }
-            assistedStrafe(Math.signum(error) * power, targetHeading);
+            assistedStrafe(-Math.signum(error) * power, targetHeading);
             lastError = error;
             telemetry.addLine("Moving");
             telemetry.update();
@@ -953,8 +958,8 @@ public class MecanumDriveTrain {
     Distance is positive: Go left
      */
     public void encoderStrafeToInches(double distance, double power) {
-        double timeout = linearOpMode.getRuntime() + ((.25 / power) * Math.abs(distance) / 4);
         power = Math.abs(power);
+        double timeout = linearOpMode.getRuntime() + ((.25 / power) * Math.abs(distance) / 4);
         double target = getOverallPosition() + distance * UniversalConstants.ticksPerInch;
         double accuracyToTheInch = .75;
         double accuracyInTicks = UniversalConstants.ticksPerInch * accuracyToTheInch;
