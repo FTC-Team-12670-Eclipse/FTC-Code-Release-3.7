@@ -53,13 +53,13 @@ public class AutonomousFarIntakeBlueColorMG extends LinearOpMode {
         robot.intakeMecanism.stopIntake();
         robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, targetAngle);
 
-        robot.driveTrain.moveToInches(40, .2 * FORWARDS_SPEED_MODIFIER);
+        robot.driveTrain.moveToInches(35, .2 * FORWARDS_SPEED_MODIFIER);
         robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, targetAngle);
 
         robot.driveTrain.swingColorDistanceDown();
 
         double power = .1;
-        double distance = 7;
+        double distance = 12;
         DistanceUnit unit = DistanceUnit.CM;
 
         switch (vuMark) {
