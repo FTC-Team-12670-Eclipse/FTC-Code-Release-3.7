@@ -75,6 +75,11 @@ public class IntakeMecanism {
         setIntakePowers(p, p);
     }
 
+    public void setIntakePowersOverride(double p) {
+        infeedLeft.setPower(p);
+        infeedRight.setPower(p);
+    }
+
     public void setIntakePowers(double left, double right) {
         double maxSpeed = .5;
         left = Range.clip(left, -maxSpeed, maxSpeed);

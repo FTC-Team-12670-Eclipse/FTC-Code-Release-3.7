@@ -982,4 +982,33 @@ public class MecanumDriveTrain {
         }
     }
 
+    public void turnWithOneSideOnly(double angle, double angleThreshold, double left, double right) {
+        double error = angle - getRawHeading();
+        double lastError = error;
+        while (opModeIsActive() && Math.abs(error) > angleThreshold) {
+            error = angle - getRawHeading();
+            if (error / lastError < 0) {
+                park();
+                return;
+            }
+            setAll(left, right);
+            lastError = error;
+        }
+        park();
+    }
+
+    public void moveToSeesDistance(double power) {
+        while (Double.isNaN(leftSensorDistance.getDistance(DistanceUnit.CM)) && Double.isNaN(rightSensorDistance.getDistance(DistanceUnit.CM))) {
+            translateBy(power, 0, 0);
+        }
+        park();
+    }
+
+    public void moveToNotSeesDistance(double power) {
+        while (!(Double.isNaN(leftSensorDistance.getDistance(DistanceUnit.CM)) && Double.isNaN(rightSensorDistance.getDistance(DistanceUnit.CM)))) {
+            translateBy(power, 0, 0);
+        }
+        park();
+    }
+
 }

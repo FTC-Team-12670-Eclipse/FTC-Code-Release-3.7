@@ -37,24 +37,28 @@ public class AutonomousTesterNew extends LinearOpMode {
                     @Override
                     public void run() {
                         robot.driveTrain.moveToInches(10, 1);
+                        robot.driveTrain.park();
                     }
                 }),
                 new ActionType("Backwards 10 Inches", new Runnable() {
                     @Override
                     public void run() {
                         robot.driveTrain.moveToInches(-10, 1);
+                        robot.driveTrain.park();
                     }
                 }),
                 new ActionType("Color Distance Up", new Runnable() {
                     @Override
                     public void run() {
                         robot.driveTrain.swingColorDistanceUp();
+                        robot.driveTrain.park();
                     }
                 }),
                 new ActionType("Color Distance Down", new Runnable() {
                     @Override
                     public void run() {
                         robot.driveTrain.swingColorDistanceDown();
+                        robot.driveTrain.park();
                     }
                 }),
                 new ActionType("Strafe to 10cm Left", new Runnable() {
@@ -62,6 +66,7 @@ public class AutonomousTesterNew extends LinearOpMode {
                     public void run() {
                         double distance = 10;
                         robot.driveTrain.strafeToDistanceLeft(.2, distance, DistanceUnit.CM);
+                        robot.driveTrain.park();
                     }
                 }),
                 new ActionType("Strafe to 6cm Left", new Runnable() {
@@ -69,6 +74,7 @@ public class AutonomousTesterNew extends LinearOpMode {
                     public void run() {
                         double distance = 6;
                         robot.driveTrain.strafeToDistanceLeft(.2, distance, DistanceUnit.CM);
+                        robot.driveTrain.park();
                     }
                 }),
                 new ActionType("Strafe to 6cm Right", new Runnable() {
@@ -76,12 +82,21 @@ public class AutonomousTesterNew extends LinearOpMode {
                     public void run() {
                         double distance = 6;
                         robot.driveTrain.strafeToDistanceRight(.2, distance, DistanceUnit.CM);
+                        robot.driveTrain.park();
                     }
                 }),
                 new ActionType("Encoder Strafe 6cm Right", new Runnable() {
                     @Override
                     public void run() {
                         double distance = -6;
+                        robot.driveTrain.encoderStrafeToInches(distance, .25);
+                        robot.driveTrain.park();
+                    }
+                }),
+                new ActionType("Encoder Strafe 10cm Left", new Runnable() {
+                    @Override
+                    public void run() {
+                        double distance = 10;
                         robot.driveTrain.encoderStrafeToInches(distance, .25);
                         robot.driveTrain.park();
                     }
