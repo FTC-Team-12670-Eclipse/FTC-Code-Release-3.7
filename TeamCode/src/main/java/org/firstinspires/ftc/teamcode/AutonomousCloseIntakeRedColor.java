@@ -43,7 +43,7 @@ public class AutonomousCloseIntakeRedColor extends LinearOpMode {
         robot.driveTrain.moveToInches(-2.5, .1 * FORWARDS_SPEED_MODIFIER);
         robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, targetAngle);
         robot.driveTrain.swingColorDistanceDown();
-        robot.driveTrain.moveToInches(2.5, .1 * FORWARDS_SPEED_MODIFIER);
+        robot.driveTrain.autoWallDistanceSensor(26, .15 * FORWARDS_SPEED_MODIFIER, DistanceUnit.CM);
 
         double power = .1;
         double distance = 8.25;

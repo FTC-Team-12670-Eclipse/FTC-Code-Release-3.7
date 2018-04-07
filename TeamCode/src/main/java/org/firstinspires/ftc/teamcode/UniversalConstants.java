@@ -94,8 +94,8 @@ public class UniversalConstants {
     public static final double relicElbowAwayFromWall = .37;
     public static final double relicElbowDown = 1;
     public static final double relicElbowStored = .11;
-    public static final double relicPincherPinched = .35;
-    public static final double relicPincherFullyOpen = 1;
+    public static final double relicPincherPinched = .38;
+    public static final double relicPincherFullyOpen = .9;
 
     private static double relicSpoolDiameter = 2.5; //inches
     private static double relicSpoolCircumference = relicSpoolDiameter * Math.PI; //inches
