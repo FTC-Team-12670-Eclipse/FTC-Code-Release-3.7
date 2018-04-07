@@ -34,10 +34,10 @@ public class AutonomousFarIntakeBlueColorMG extends LinearOpMode {
         robot.driveTrain.encoderStrafeToInches(10, .25 * STRAFE_SPEED_MODIFIER);
         robot.driveTrain.park();
 
-
         if (vuMark == RelicRecoveryVuMark.UNKNOWN) {
             vuMark = robot.vuforiaRelicRecoveryGetter.getPattern();
         }
+
         robot.intakeMecanism.setIntakePowers(.5);
         robot.driveTrain.turnWithOneSideOnly(45, 5, 0, .25);
         robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, 45);
@@ -45,28 +45,33 @@ public class AutonomousFarIntakeBlueColorMG extends LinearOpMode {
         robot.intakeMecanism.outtake();
         sleep(200);
         robot.intakeMecanism.setIntakePowers(.5);
-        robot.driveTrain.moveToInches(1.5, .35 * FORWARDS_SPEED_MODIFIER);
+        robot.driveTrain.moveToInches(2.5, .35 * FORWARDS_SPEED_MODIFIER);
         robot.driveTrain.moveToInches(-5, .25 * FORWARDS_SPEED_MODIFIER);
 
         double targetAngle = 180;
+        long sleepTime = 50;
 
         robot.intakeMecanism.stopIntake();
         robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, targetAngle);
+        robot.driveTrain.park();
+        sleep(sleepTime);
 
-        //Add stuff here about forwards wall sensor
-        //new stuff added starts here
-        robot.driveTrain.autoWallDistanceSensor(3, 1 * FORWARDS_SPEED_MODIFIER, DistanceUnit.CM);
+        robot.driveTrain.moveToInches(20, .40 * FORWARDS_SPEED_MODIFIER);
+        robot.driveTrain.park();
+        sleep(sleepTime);
 
-        //end of new stuff added
-
-        //og code was this:
-        //robot.driveTrain.moveToInches(37 , .2 * FORWARDS_SPEED_MODIFIER);
         robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, targetAngle);
+        robot.driveTrain.park();
+        sleep(sleepTime);
+
+        robot.driveTrain.autoWallDistanceSensor(25, .15 * FORWARDS_SPEED_MODIFIER, DistanceUnit.CM);
+        robot.driveTrain.park();
+        sleep(sleepTime);
 
         robot.driveTrain.swingColorDistanceDown();
 
         double power = .1;
-        double distance = 12;
+        double distance = 13;
         DistanceUnit unit = DistanceUnit.CM;
 
         switch (vuMark) {
@@ -85,11 +90,16 @@ public class AutonomousFarIntakeBlueColorMG extends LinearOpMode {
             case RIGHT:
             default:
                 robot.driveTrain.park();
+                sleep(sleepTime);
                 robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, targetAngle);
-                robot.driveTrain.swingColorDistanceDown();
-                robot.driveTrain.strafeToDistanceLeft(power * STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
-                robot.driveTrain.strafeToDistanceLeft(power * STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
                 robot.driveTrain.park();
+                sleep(sleepTime);
+                robot.driveTrain.swingColorDistanceDown();
+                robot.driveTrain.strafeToDistanceLeftCoast(power * 2 * STRAFE_SPEED_MODIFIER, distance + 3, targetAngle, unit);
+                robot.driveTrain.strafeToDistanceLeft(power * STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
+                //sleep(2500);
+                robot.driveTrain.park();
+                //sleep(2500);
                 break;
         }
 
@@ -105,6 +115,7 @@ public class AutonomousFarIntakeBlueColorMG extends LinearOpMode {
         sleep(200);
         robot.intakeMecanism.stopIntake();
         robot.driveTrain.moveToInches(-4, .25 * FORWARDS_SPEED_MODIFIER);
+        robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, targetAngle);
         switch (vuMark) {
             case CENTER:
             case RIGHT:

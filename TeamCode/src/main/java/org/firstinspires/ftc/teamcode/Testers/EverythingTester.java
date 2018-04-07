@@ -122,7 +122,7 @@ public class EverythingTester extends LinearOpMode {
             telemetry.addData("Blue ", sensorColor.blue());
             telemetry.addData("Hue", hsvValues[0]);
 
-            telemetry.addData("Distance From Wall", forwardsWallDistSensor.getDistance(DistanceUnit.CM));
+            telemetry.addData("Distance From Wall (cm)", forwardsWallDistSensor.getDistance(DistanceUnit.CM));
 
             // change the background color to match the color detected by the RGB sensor.
             // pass a reference to the hue, saturation, and value array as an argument

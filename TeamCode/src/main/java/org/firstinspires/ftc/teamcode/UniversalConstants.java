@@ -38,7 +38,7 @@ public class UniversalConstants {
     public static final String jewelGimbleElbow = "jge"; //earlier bottom
     public static final String jewelGimbleWrist = "jgw"; // earlier top
     public static final String jewelColorSensor = "jcs";
-    public static final String forwardsWallSensor = "fws"
+    public static final String forwardsWallSensor = "fws";
 
     public static final String leftSensorDistanceServo = "sdsl";
     public static final String rightSensorDistanceServo = "sdsr";

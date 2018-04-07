@@ -844,8 +844,9 @@ public class MecanumDriveTrain {
             targetHeading = -180;
         }
         double offAngle = getRawHeading() - targetHeading;
-        double P_VALUE = .015;
-        translateBy(0, horizontal, offAngle * P_VALUE);
+        double P_VALUE = .005;
+        double turnValue = offAngle * P_VALUE;
+        translateBy(0, horizontal, Range.clip(turnValue, -.1, .1));
     }
 
     public void strafeToDistanceLeft(double power, double dist, DistanceUnit unit) {
@@ -857,17 +858,30 @@ public class MecanumDriveTrain {
         //while the robot's position is not the certain amount of distance from the white tape
         // use the color distance sensor to find the distance
         double error = dist - leftSensorDistance.getDistance(unit);
+        double currentGyro = getRawHeading();
+        double lastGyro = currentGyro;
+        double deltaGyro;
         if (Double.isNaN(error)) {
             error = -100;
         }
         while (opModeIsActive() && Math.abs(error) > .75) {
             error = dist - leftSensorDistance.getDistance(unit);
+            currentGyro = getRawHeading();
             if (Double.isNaN(error)) {
                 error = -100;
             }
-            assistedStrafe(Math.signum(error) * power, targetHeading);
-            telemetry.addLine("Moving");
-            telemetry.update();
+            deltaGyro = Math.abs(lastGyro - currentGyro);
+            if (Math.signum(lastGyro) != Math.signum(currentGyro)) {
+                deltaGyro = Math.abs(lastGyro + currentGyro);
+            }
+            if (deltaGyro > 10) {
+                telemetry.addLine("Bad Gyro Reading! Error went from " + lastGyro + " to " + currentGyro);
+                telemetry.update();
+                translateBy(0, Math.signum(error) * power, 0);
+            } else {
+                lastGyro = currentGyro;
+                assistedStrafe(Math.signum(error) * power, targetHeading);
+            }
         }
         park();
     }
@@ -1018,20 +1032,20 @@ public class MecanumDriveTrain {
     public void autoWallDistanceSensor(double distance, double power, DistanceUnit unit) {
 
         double error = forwardsWallDSensor.getDistance(unit) - distance;
-        double lastError = error;
+        // double lastError = error;
         if (Double.isNaN(error)) {
             error = 100;
         }
         while (opModeIsActive() && Math.abs(error) > .5) {
             error = forwardsWallDSensor.getDistance(unit) - distance;
-            if (error / lastError < 0) {
-                return;
-            }
+            //if (error / lastError < 0) {
+            //    return;
+            //}
             if (Double.isNaN(error)) {
                 error = 100;
             }
-            lastError = error;
-            translateBy(power, 0, 0);
+            //lastError = error;
+            translateBy(Math.signum(error) * power, 0, 0);
         }
     }
 

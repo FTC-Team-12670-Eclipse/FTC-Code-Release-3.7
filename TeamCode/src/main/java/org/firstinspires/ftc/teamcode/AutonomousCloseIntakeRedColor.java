@@ -46,8 +46,9 @@ public class AutonomousCloseIntakeRedColor extends LinearOpMode {
         robot.driveTrain.moveToInches(2.5, .1 * FORWARDS_SPEED_MODIFIER);
 
         double power = .1;
-        double distance = 7;
+        double distance = 8.25;
         DistanceUnit unit = DistanceUnit.CM;
+
 
         switch (vuMark) {
             case LEFT:
@@ -76,33 +77,21 @@ public class AutonomousCloseIntakeRedColor extends LinearOpMode {
 
         robot.driveTrain.storeColorDistance();
 
-        robot.driveTrain.moveToInches(3, .25 * FORWARDS_SPEED_MODIFIER);
 
         robot.intakeMecanism.deployFoldoutIntake();
         robot.intakeMecanism.outtakeSlowly();
-        robot.intakeMecanism.setIntakePowers(-.75);
+        robot.intakeMecanism.setIntakePowers(.35, -.35);
+        sleep(500);
+        robot.intakeMecanism.setIntakePowersOverride(-.25);
+        robot.driveTrain.moveToInches(3, .15 * FORWARDS_SPEED_MODIFIER);
 
-        robot.driveTrain.moveToInches(-7, .35 * FORWARDS_SPEED_MODIFIER);
+        robot.driveTrain.moveToInches(-7, .15 * FORWARDS_SPEED_MODIFIER);
 
         robot.intakeMecanism.stopIntake();
         robot.relicMecanism.storeServos();
 
         stop();
 
-        /*
-        if (vuMark == RelicRecoveryVuMark.LEFT) {
-            robot.driveTrain.moveToInches(-15, 1);
-            robot.driveTrain.gyroTurn(.25, 145);
-            robot.intakeMecanism.intake();
-            robot.driveTrain.moveToInches(30, .75);
-            robot.driveTrain.moveToInches(-15, .5);
-            robot.driveTrain.gyroTurn(.25, -45);
-            robot.driveTrain.moveToInches(25, .6);
-            robot.driveTrain.swingColorDistanceUp();
-            robot.driveTrain.gyroTurn(.25, 0);
-            robot.intakeMecanism.outtake();
-        }
-        */
 
     }
 }
