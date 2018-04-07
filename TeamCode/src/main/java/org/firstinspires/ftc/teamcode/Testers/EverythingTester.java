@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.view.View;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -86,8 +87,10 @@ public class EverythingTester extends LinearOpMode {
 
         ColorSensor sensorColor;
         DistanceSensor sensorDistance;
+        ModernRoboticsI2cRangeSensor forwardsWallDistSensor;
         // get a reference to the color sensor.
         sensorColor = hardwareMap.get(ColorSensor.class, UniversalConstants.jewelColorSensor);
+        forwardsWallDistSensor = hardwareMap.get(ModernRoboticsI2cRangeSensor.class, UniversalConstants.forwardsWallSensor);
 
         // get a reference to the distance sensor that shares the same name.
         sensorDistance = hardwareMap.get(DistanceSensor.class, UniversalConstants.jewelColorSensor);
@@ -118,6 +121,8 @@ public class EverythingTester extends LinearOpMode {
             telemetry.addData("Green", sensorColor.green());
             telemetry.addData("Blue ", sensorColor.blue());
             telemetry.addData("Hue", hsvValues[0]);
+
+            telemetry.addData("Distance From Wall", forwardsWallDistSensor.getDistance(DistanceUnit.CM));
 
             // change the background color to match the color detected by the RGB sensor.
             // pass a reference to the hue, saturation, and value array as an argument

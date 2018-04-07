@@ -1017,16 +1017,21 @@ public class MecanumDriveTrain {
 
     public void autoWallDistanceSensor(double distance, double power, DistanceUnit unit) {
 
-        double error = distance - forwardsWallDSensor.getDistance(unit);
+        double error = forwardsWallDSensor.getDistance(unit) - distance;
         double lastError = error;
-        if (Double.isNaN(error)){
-            error = -100;
+        if (Double.isNaN(error)) {
+            error = 100;
         }
-        while(opModeIsActive()&& Math.abs(error)>.75){
-            error = distance - forwardsWallDSensor.getDistance(unit);
-            if(Double.is){
-                return
+        while (opModeIsActive() && Math.abs(error) > .5) {
+            error = forwardsWallDSensor.getDistance(unit) - distance;
+            if (error / lastError < 0) {
+                return;
             }
+            if (Double.isNaN(error)) {
+                error = 100;
+            }
+            lastError = error;
+            translateBy(power, 0, 0);
         }
     }
 
