@@ -124,7 +124,6 @@ public class MecanumDriveTrain {
 
         status("Motor Run-Modes");
 
-
     }
 
 
@@ -1014,6 +1013,21 @@ public class MecanumDriveTrain {
             translateBy(power, 0, 0);
         }
         park();
+    }
+
+    public void autoWallDistanceSensor(double distance, double power, DistanceUnit unit) {
+
+        double error = distance - forwardsWallDSensor.getDistance(unit);
+        double lastError = error;
+        if (Double.isNaN(error)){
+            error = -100;
+        }
+        while(opModeIsActive()&& Math.abs(error)>.75){
+            error = distance - forwardsWallDSensor.getDistance(unit);
+            if(Double.is){
+                return
+            }
+        }
     }
 
 }

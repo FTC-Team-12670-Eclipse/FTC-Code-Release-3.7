@@ -54,6 +54,8 @@ public class AutonomousFarIntakeBlueColorMG extends LinearOpMode {
         robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, targetAngle);
 
         //Add stuff here about forwards wall sensor
+        //Add method called autoWallDistanceSensor(distance, power)
+        robot.driveTrain.
         // robot.driveTrain.moveToInches(37 , .2 * FORWARDS_SPEED_MODIFIER);
         robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, targetAngle);
 
