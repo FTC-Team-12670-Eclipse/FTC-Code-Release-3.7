@@ -98,6 +98,7 @@ public class MecanumDriveTrain {
         colorDistanceServo = linearOpMode.hardwareMap.servo.get(UniversalConstants.colorDistanceAutonomousServo);
 
         colorDistanceServo.setPosition(UniversalConstants.colorDistanceServoStored);
+        forwardsWallDSensor = linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, UniversalConstants.forwardsWallSensor);
 
         status("Distance Arm");
 
@@ -122,6 +123,8 @@ public class MecanumDriveTrain {
         setAll(DcMotor.RunMode.RUN_USING_ENCODER);
 
         status("Motor Run-Modes");
+
+
     }
 
 
