@@ -38,6 +38,7 @@ public class UniversalConstants {
     public static final String jewelGimbleElbow = "jge"; //earlier bottom
     public static final String jewelGimbleWrist = "jgw"; // earlier top
     public static final String jewelColorSensor = "jcs";
+    public static final String forwardsWallSensor = "fws"
 
     public static final String leftSensorDistanceServo = "sdsl";
     public static final String rightSensorDistanceServo = "sdsr";
@@ -112,6 +113,7 @@ public class UniversalConstants {
     public static final double colorDistanceServoStored = 0;
     public static final double colorDistanceServoUp = .4;
     public static final double ColorDistanceServoDown = .9;
+
 
     public static final String vuforiaLicenceKey = "AfVNPjT/////AAAAGWxt1A0qnE/0ubDxBQVByN5Rb1GNo+3vvrqiIVpsnNHDWKyEcVhuKt6W/wPMw/0/wJh0iMnrWM+HddaZeSV8uGaUacthmkOT/xVt/+A+hlgt+3rIkDKkAYfIOw/DCK/RNY5U1LWCFSPGdjt5w3BQEg3iOEWzuhyovpBn+UlS56UhH6q5wP9qz9PpabM1Q7IW9MoYUGKTsiiLCQbB7ICHckbAQQBU1WJQdD3fAGnOOM0Dh1yjtOBlU3+kFZQOxKXNiVr5xxAZm903atvnT179VaATgl8U2yN9IW6h9gZ8tghlubFyeLRSiMaOrv/0gYchtBHH51WBJEsy2Tv2rzt403b4QMuZE5zQTRiZPJuJn83L";
     private static VuforiaLocalizer.CameraDirection selfieCam = VuforiaLocalizer.CameraDirection.FRONT;

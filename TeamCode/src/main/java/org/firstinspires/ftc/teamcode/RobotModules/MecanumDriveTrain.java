@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.RobotModules;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -36,6 +37,7 @@ public class MecanumDriveTrain {
     public DistanceSensor rightSensorDistance;
     public ColorSensor leftSensorColor;
     public ColorSensor rightSensorColor;
+    public ModernRoboticsI2cRangeSensor forwardsWallDSensor;
 
     enum DriveMode {
         NORMAL_SPEED, SLOW_MODE, RELIC_SLOW
