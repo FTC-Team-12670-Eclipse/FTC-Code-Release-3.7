@@ -71,11 +71,11 @@ public class AutonomousFarIntakeBlueMG extends LinearOpMode {
             case RIGHT:
                 break;
             case CENTER:
-                robot.driveTrain.encoderStrafeToInches(FAR_DISTANCE - MIDDLE_DISTANCE + 3, moveToPositionPower, targetAngle);
+                robot.driveTrain.encoderStrafeToInches(FAR_DISTANCE - MIDDLE_DISTANCE - 3, moveToPositionPower, targetAngle);
                 break;
             default:
             case LEFT:
-                robot.driveTrain.encoderStrafeToInches(FAR_DISTANCE - CLOSE_DISTANCE + 3, moveToPositionPower, targetAngle);
+                robot.driveTrain.encoderStrafeToInches(FAR_DISTANCE - CLOSE_DISTANCE - 3, moveToPositionPower, targetAngle);
                 break;
         }
         robot.driveTrain.park();
