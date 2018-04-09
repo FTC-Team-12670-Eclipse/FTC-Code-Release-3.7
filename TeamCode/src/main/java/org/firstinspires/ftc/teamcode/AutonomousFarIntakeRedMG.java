@@ -82,8 +82,8 @@ public class AutonomousFarIntakeRedMG extends LinearOpMode {
 
         robot.driveTrain.gyroTurn(.1, targetAngle);
         robot.intakeMecanism.intake();
-        robot.driveTrain.moveToInches(40, .65);
-        robot.driveTrain.moveToInches(-20, .65);
+        robot.driveTrain.moveToInches(45, .65);
+        robot.driveTrain.moveToInches(-25, .65);
 
         targetAngle = 0;
         robot.driveTrain.gyroTurn(.1, targetAngle);
