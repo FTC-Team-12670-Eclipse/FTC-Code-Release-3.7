@@ -8,6 +8,9 @@ public class UniversalConstants {
     public static final double robotFrontOffset = 0;
     // These are in millimeters.
 
+    public static final double distanceBlueODS = 13;
+    public static final double distanceRedODS = 8.25;
+
     public static final double millimetersPerInch = 25.4;
 
     public static final float joystickDeadzone = .1f;

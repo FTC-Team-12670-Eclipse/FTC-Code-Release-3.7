@@ -71,7 +71,7 @@ public class AutonomousFarIntakeBlueColorMG extends LinearOpMode {
         robot.driveTrain.swingColorDistanceDown();
 
         double power = .1;
-        double distance = 13;
+        double distance = UniversalConstants.distanceBlueODS;
         DistanceUnit unit = DistanceUnit.CM;
 
         switch (vuMark) {
@@ -79,13 +79,13 @@ public class AutonomousFarIntakeBlueColorMG extends LinearOpMode {
                 robot.driveTrain.swingColorDistanceDown();
                 robot.driveTrain.strafeToDistanceLeftCoast(power * STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
                 robot.driveTrain.swingColorDistanceUp();
-                robot.driveTrain.encoderStrafeToInches(1.5, power * STRAFE_SPEED_MODIFIER);
+                robot.driveTrain.encoderStrafeToInches(1.5, power * STRAFE_SPEED_MODIFIER, targetAngle);
                 robot.driveTrain.swingColorDistanceDown();
             case CENTER:
                 robot.driveTrain.swingColorDistanceDown();
                 robot.driveTrain.strafeToDistanceLeftCoast(power * STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
                 robot.driveTrain.swingColorDistanceUp();
-                robot.driveTrain.encoderStrafeToInches(1.5, power * STRAFE_SPEED_MODIFIER);
+                robot.driveTrain.encoderStrafeToInches(1.5, power * STRAFE_SPEED_MODIFIER, targetAngle);
                 robot.driveTrain.swingColorDistanceDown();
             case RIGHT:
             default:

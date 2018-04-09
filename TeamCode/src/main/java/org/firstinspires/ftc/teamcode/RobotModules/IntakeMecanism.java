@@ -2,11 +2,13 @@ package org.firstinspires.ftc.teamcode.RobotModules;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.UniversalConstants;
 
 public class IntakeMecanism {
@@ -58,8 +60,17 @@ public class IntakeMecanism {
         linearOpMode.telemetry.addData("Intake Right", infeedRight.getPower() > 0 ? "Infeeding" : infeedRight.getPower() < 0 ? "Outfeeding" : "Not Moving");
     }
 
+    public double[] getVelocities() {
+        return new double[]{((DcMotorEx) infeedLeft).getVelocity(AngleUnit.DEGREES), ((DcMotorEx) infeedRight).getVelocity(AngleUnit.DEGREES)};
+    }
+
     double getAvgPosition() {
         return ((infeedLeft.getCurrentPosition() + infeedRight.getCurrentPosition()) / 2);
+    }
+
+    public void setPowerVelocity(double l, double r) {
+        ((DcMotorEx) infeedLeft).setVelocity(l * 380, AngleUnit.DEGREES);
+        ((DcMotorEx) infeedRight).setVelocity(r * 380, AngleUnit.DEGREES);
     }
 
     public void outtakeSlowly() {

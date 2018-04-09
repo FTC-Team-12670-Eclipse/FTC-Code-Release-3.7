@@ -35,68 +35,72 @@ public class AutonomousFarIntakeBlueColor extends LinearOpMode {
         if (vuMark == RelicRecoveryVuMark.UNKNOWN) {
             vuMark = robot.vuforiaRelicRecoveryGetter.getPattern();
         }
-        robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, 90);
         robot.driveTrain.moveToInches(3, .25 * FORWARDS_SPEED_MODIFIER);
+        robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, -90);
+        robot.driveTrain.autoWallDistanceSensor(100, .25, DistanceUnit.CM, 5);
 
         double targetAngle = 180;
-        double power = .1;
-        double distance = 7;
-        DistanceUnit unit = DistanceUnit.CM;
 
         robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, targetAngle);
-        robot.driveTrain.park();
-        robot.driveTrain.swingColorDistanceDown();
-        robot.driveTrain.moveToInches(3, .2 * FORWARDS_SPEED_MODIFIER);
+
+        robot.driveTrain.autoWallDistanceSensor(28, .15 * FORWARDS_SPEED_MODIFIER, DistanceUnit.CM);
+
+        robot.relicMecanism.swingAwayFromWall();
+
+        if (vuMark == RelicRecoveryVuMark.UNKNOWN) {
+            vuMark = robot.vuforiaRelicRecoveryGetter.getPattern();
+        }
+
+
+        robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, targetAngle);
+
+        double power = .1;
+        double distance = UniversalConstants.distanceBlueODS;
+        DistanceUnit unit = DistanceUnit.CM;
 
         switch (vuMark) {
-            case RIGHT:
+            case LEFT:
                 robot.driveTrain.swingColorDistanceDown();
-                robot.driveTrain.strafeToDistanceRightCoast(power * STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
-                robot.driveTrain.translateBy(0, power * STRAFE_SPEED_MODIFIER, 0);
+                robot.driveTrain.strafeToDistanceLeftCoast(power * STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
+                robot.driveTrain.translateBy(0, -power * STRAFE_SPEED_MODIFIER, 0);
                 robot.driveTrain.swingColorDistanceUp();
-                robot.driveTrain.encoderStrafeToInches(-1.5, power * STRAFE_SPEED_MODIFIER);
+                robot.driveTrain.encoderStrafeToInches(1.5, power * STRAFE_SPEED_MODIFIER, targetAngle);
                 robot.driveTrain.swingColorDistanceDown();
             case CENTER:
                 robot.driveTrain.swingColorDistanceDown();
-                robot.driveTrain.strafeToDistanceRightCoast(power * STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
-                robot.driveTrain.translateBy(0, power * STRAFE_SPEED_MODIFIER, 0);
+                robot.driveTrain.strafeToDistanceLeftCoast(power * STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
+                robot.driveTrain.translateBy(0, -power * STRAFE_SPEED_MODIFIER, 0);
                 robot.driveTrain.swingColorDistanceUp();
-                robot.driveTrain.encoderStrafeToInches(-1.5, power * STRAFE_SPEED_MODIFIER);
+                robot.driveTrain.encoderStrafeToInches(1.5, power * STRAFE_SPEED_MODIFIER, targetAngle);
                 robot.driveTrain.swingColorDistanceDown();
-            case LEFT:
+            case RIGHT:
             default:
-                robot.driveTrain.swingColorDistanceDown();
-                robot.driveTrain.strafeToDistanceRightCoast(power * STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
-                robot.driveTrain.translateBy(0, power * STRAFE_SPEED_MODIFIER, 0);
-                robot.driveTrain.swingColorDistanceUp();
-                robot.driveTrain.encoderStrafeToInches(-1.5, power * STRAFE_SPEED_MODIFIER);
-                robot.driveTrain.swingColorDistanceDown();
-
                 robot.driveTrain.park();
                 robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, targetAngle);
                 robot.driveTrain.swingColorDistanceDown();
-                robot.driveTrain.strafeToDistanceLeft(power * STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
+                robot.driveTrain.park();
+                robot.driveTrain.strafeToDistanceLeft(.07 * STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
                 robot.driveTrain.park();
                 break;
         }
 
         robot.driveTrain.storeColorDistance();
 
-        robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, targetAngle);
+        robot.driveTrain.moveToInches(-3, .15 * FORWARDS_SPEED_MODIFIER);
         robot.intakeMecanism.deployFoldoutIntake();
+        robot.intakeMecanism.intake();
+        sleep(50);
         robot.intakeMecanism.outtakeSlowly();
         robot.intakeMecanism.setIntakePowers(.5, -.5);
         sleep(500);
-        robot.intakeMecanism.setIntakePowers(-.75);
-        robot.driveTrain.moveToInches(3, .25 * FORWARDS_SPEED_MODIFIER);
+        robot.intakeMecanism.setIntakePowers(-.5, -.5);
+        robot.driveTrain.moveToInches(7, .15 * FORWARDS_SPEED_MODIFIER);
 
-        robot.driveTrain.moveToInches(-7, .35 * FORWARDS_SPEED_MODIFIER);
+        robot.driveTrain.moveToInches(-8, .15 * FORWARDS_SPEED_MODIFIER);
 
         robot.intakeMecanism.stopIntake();
         robot.relicMecanism.storeServos();
 
         stop();
-
-
     }
 }

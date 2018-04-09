@@ -160,6 +160,8 @@ public class AutonomousTesterNew extends LinearOpMode {
                 position = (position + actions.length) % actions.length;
                 telemetry.addData("Color Distance Reading Left (cm)", robot.driveTrain.leftSensorDistance.getDistance(DistanceUnit.CM));
                 telemetry.addData("Color Distance Reading Right (cm)", robot.driveTrain.rightSensorDistance.getDistance(DistanceUnit.CM));
+                telemetry.addData("Heading", robot.driveTrain.getHeading());
+                telemetry.addData("MR i2c Distance (cm)", robot.driveTrain.forwardsWallDSensor.getDistance(DistanceUnit.CM));
                 telemetry.addData("Chosen Task", actions[position].name);
                 telemetry.update();
             }

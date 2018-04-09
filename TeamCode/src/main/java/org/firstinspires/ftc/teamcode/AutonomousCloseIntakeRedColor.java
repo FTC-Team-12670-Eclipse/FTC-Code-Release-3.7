@@ -46,7 +46,7 @@ public class AutonomousCloseIntakeRedColor extends LinearOpMode {
         robot.driveTrain.autoWallDistanceSensor(26, .15 * FORWARDS_SPEED_MODIFIER, DistanceUnit.CM);
 
         double power = .1;
-        double distance = 8.25;
+        double distance = UniversalConstants.distanceRedODS;
         DistanceUnit unit = DistanceUnit.CM;
 
 
@@ -56,14 +56,14 @@ public class AutonomousCloseIntakeRedColor extends LinearOpMode {
                 robot.driveTrain.strafeToDistanceLeftCoast(power * STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
                 robot.driveTrain.translateBy(0, -power * STRAFE_SPEED_MODIFIER, 0);
                 robot.driveTrain.swingColorDistanceUp();
-                robot.driveTrain.encoderStrafeToInches(1.5, power * STRAFE_SPEED_MODIFIER);
+                robot.driveTrain.encoderStrafeToInches(1.5, power * STRAFE_SPEED_MODIFIER, targetAngle);
                 robot.driveTrain.swingColorDistanceDown();
             case CENTER:
                 robot.driveTrain.swingColorDistanceDown();
                 robot.driveTrain.strafeToDistanceLeftCoast(power * STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
                 robot.driveTrain.translateBy(0, -power * STRAFE_SPEED_MODIFIER, 0);
                 robot.driveTrain.swingColorDistanceUp();
-                robot.driveTrain.encoderStrafeToInches(1.5, power * STRAFE_SPEED_MODIFIER);
+                robot.driveTrain.encoderStrafeToInches(1.5, power * STRAFE_SPEED_MODIFIER, targetAngle);
                 robot.driveTrain.swingColorDistanceDown();
             case RIGHT:
             default:
