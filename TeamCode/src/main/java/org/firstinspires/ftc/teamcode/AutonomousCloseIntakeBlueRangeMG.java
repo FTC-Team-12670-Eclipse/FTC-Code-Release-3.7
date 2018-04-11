@@ -4,12 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.RobotModules.Robot;
 
-@Autonomous(name = "Red CLOSE Special")
-public class AutonomousCloseIntakeRedRangeMG extends LinearOpMode {
+@Autonomous(name = "Blue CLOSE Special")
+public class AutonomousCloseIntakeBlueRangeMG extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -20,7 +19,7 @@ public class AutonomousCloseIntakeRedRangeMG extends LinearOpMode {
         Robot robot = new Robot(this, true, true, true, DcMotor.ZeroPowerBehavior.BRAKE);
         robot.addAndUpdateTelemetry("Ready to go!");
         RelicRecoveryVuMark vuMark;
-        AutonomousUtil.AllianceColor color = AutonomousUtil.getColorToDislodge(this, AutonomousUtil.AllianceColor.Blue, robot);
+        AutonomousUtil.AllianceColor color = AutonomousUtil.getColorToDislodge(this, AutonomousUtil.AllianceColor.Red, robot);
 
         waitForStart();
 
@@ -29,7 +28,7 @@ public class AutonomousCloseIntakeRedRangeMG extends LinearOpMode {
         robot.relicMecanism.swingElbowUp();
         robot.intakeMecanism.deployFoldoutIntake();
         robot.jewelSwatter.removeJewelOfColor(color);
-        AutonomousUtil.driveRobotOffRamp(robot, AutonomousUtil.AllianceColor.Red);
+        AutonomousUtil.driveRobotOffRamp(robot, AutonomousUtil.AllianceColor.Blue);
 
         robot.relicMecanism.swingAwayFromWall();
 
@@ -37,15 +36,15 @@ public class AutonomousCloseIntakeRedRangeMG extends LinearOpMode {
             vuMark = robot.vuforiaRelicRecoveryGetter.getPattern();
         }
 
-        double targetAngle = -90;
+        double targetAngle = 90;
         robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, targetAngle);
 
         switch (vuMark) {
-            case LEFT:
-                robot.driveTrain.encoderStrafeToInches(4.5, .25);
+            case RIGHT:
+                robot.driveTrain.encoderStrafeToInches(-4.5, .25);
                 break;
             case CENTER:
-                robot.driveTrain.encoderStrafeToInches(4.5 / 2, .25);
+                robot.driveTrain.encoderStrafeToInches(-4.5 / 2, .25);
                 break;
         }
         robot.driveTrain.park();
@@ -64,14 +63,14 @@ public class AutonomousCloseIntakeRedRangeMG extends LinearOpMode {
         robot.intakeMecanism.stopIntake();
         robot.relicMecanism.storeServos();
 
-        targetAngle = 90;
+        targetAngle = -90;
         robot.driveTrain.gyroTurn(.05, targetAngle);
 
         robot.intakeMecanism.intake();
         robot.driveTrain.moveToInches(25, .25);
         robot.driveTrain.moveToInches(-15, .25);
 
-        targetAngle = -90;
+        targetAngle = 90;
         robot.driveTrain.gyroTurn(.05, targetAngle);
 
         robot.driveTrain.park();
