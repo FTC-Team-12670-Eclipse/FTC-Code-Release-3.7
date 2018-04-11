@@ -37,6 +37,7 @@ public class AutonomousFarIntakeBlueMG extends LinearOpMode {
         double FAR_DISTANCE = -8.25;
         double CLOSE_DISTANCE = -3.75;
         double MIDDLE_DISTANCE = (FAR_DISTANCE + CLOSE_DISTANCE) / 2;
+
         double moveToPositionPower = .2;
         double targetAngle = 180;
         switch (vuMark) {
@@ -66,6 +67,7 @@ public class AutonomousFarIntakeBlueMG extends LinearOpMode {
         robot.driveTrain.moveToInches(4, .15);
 
         robot.driveTrain.moveToInches(-8, .15);
+        robot.intakeMecanism.stopIntake();
 
         switch (vuMark) {
             case RIGHT:
@@ -85,7 +87,7 @@ public class AutonomousFarIntakeBlueMG extends LinearOpMode {
         robot.driveTrain.gyroTurn(.1, targetAngle);
         robot.intakeMecanism.intake();
         robot.driveTrain.moveToInches(45, .65);
-        robot.driveTrain.moveToInches(-22, .65);
+        robot.driveTrain.moveToInches(-25, .65);
 
         targetAngle = 0;
         robot.driveTrain.gyroTurn(.1, targetAngle);
@@ -103,7 +105,7 @@ public class AutonomousFarIntakeBlueMG extends LinearOpMode {
 
         robot.driveTrain.moveToInches(4, .15);
         robot.intakeMecanism.outtakeSlowly();
-        robot.intakeMecanism.setIntakePowers(.5, -.5);
+        robot.intakeMecanism.setIntakePowers(-.5, .5);
         sleep(500);
         robot.intakeMecanism.setIntakePowers(-1);
         robot.driveTrain.moveToInches(6, .15);

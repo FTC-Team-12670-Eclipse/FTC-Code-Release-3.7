@@ -36,18 +36,25 @@ public class AutonomousFarIntakeRedMG extends LinearOpMode {
         double FAR_DISTANCE = 8.25;
         double CLOSE_DISTANCE = 3.75;
         double MIDDLE_DISTANCE = (FAR_DISTANCE + CLOSE_DISTANCE) / 2;
+        double FAR_US_DISTANCE = 91;
+        double CLOSE_US_DISTANCE = 55;
+        double MIDDLE_US_DISTANCE = 72;
+
         double moveToPositionPower = .2;
         double targetAngle = 0;
         switch (vuMark) {
             case LEFT:
                 robot.driveTrain.encoderStrafeToInches(FAR_DISTANCE, moveToPositionPower, targetAngle);
+                robot.driveTrain.autoRightDistanceSensor(FAR_US_DISTANCE, .5 * moveToPositionPower, targetAngle, DistanceUnit.CM, 2);
                 break;
             case CENTER:
                 robot.driveTrain.encoderStrafeToInches(MIDDLE_DISTANCE, moveToPositionPower, targetAngle);
+                robot.driveTrain.autoRightDistanceSensor(MIDDLE_US_DISTANCE, .5 * moveToPositionPower, targetAngle, DistanceUnit.CM, 2);
                 break;
             default:
             case RIGHT:
                 robot.driveTrain.encoderStrafeToInches(CLOSE_DISTANCE, moveToPositionPower, targetAngle);
+                robot.driveTrain.autoRightDistanceSensor(CLOSE_US_DISTANCE, .5 * moveToPositionPower, targetAngle, DistanceUnit.CM, 2);
                 break;
         }
         robot.driveTrain.park();
@@ -69,13 +76,14 @@ public class AutonomousFarIntakeRedMG extends LinearOpMode {
             case LEFT:
                 break;
             case CENTER:
-                robot.driveTrain.encoderStrafeToInches(FAR_DISTANCE - MIDDLE_DISTANCE + 3, moveToPositionPower, targetAngle);
+                robot.driveTrain.encoderStrafeToInches(FAR_DISTANCE - MIDDLE_DISTANCE, moveToPositionPower, targetAngle);
                 break;
             default:
             case RIGHT:
-                robot.driveTrain.encoderStrafeToInches(FAR_DISTANCE - CLOSE_DISTANCE + 3, moveToPositionPower, targetAngle);
+                robot.driveTrain.encoderStrafeToInches(FAR_DISTANCE - CLOSE_DISTANCE, moveToPositionPower, targetAngle);
                 break;
         }
+        robot.driveTrain.autoRightDistanceSensor(FAR_US_DISTANCE, .5 * moveToPositionPower, targetAngle, DistanceUnit.CM, 2);
         robot.driveTrain.park();
 
         targetAngle = 155;
@@ -91,12 +99,15 @@ public class AutonomousFarIntakeRedMG extends LinearOpMode {
         robot.driveTrain.autoWallDistanceSensor(35, .35, DistanceUnit.CM, 20);
         robot.driveTrain.autoWallDistanceSensor(35, .15, DistanceUnit.CM);
 
-        robot.driveTrain.gyroTurn(.1, -90);
+        robot.driveTrain.gyroTurn(.05, targetAngle);
+
         if (vuMark == RelicRecoveryVuMark.LEFT) {
-            robot.driveTrain.autoWallDistanceSensor(75, .25, DistanceUnit.CM);
+            robot.driveTrain.encoderStrafeToInches(-5, moveToPositionPower, targetAngle);
+            robot.driveTrain.autoRightDistanceSensor(MIDDLE_US_DISTANCE + 15, .75 * moveToPositionPower, targetAngle, DistanceUnit.CM, 5);
         } else {
-            robot.driveTrain.autoWallDistanceSensor(90, .25, DistanceUnit.CM);
+            robot.driveTrain.autoRightDistanceSensor(FAR_US_DISTANCE + 15, .75 * moveToPositionPower, targetAngle, DistanceUnit.CM, 5);
         }
+
         robot.driveTrain.gyroTurn(.05, -15);
 
         robot.driveTrain.moveToInches(4, .15);

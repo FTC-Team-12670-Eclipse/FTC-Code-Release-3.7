@@ -61,6 +61,13 @@ public class AutonomousTesterNew extends LinearOpMode {
                         robot.driveTrain.park();
                     }
                 }),
+                new ActionType("Strafe to 70cm from Right", new Runnable() {
+                    @Override
+                    public void run() {
+                        robot.driveTrain.autoRightDistanceSensor(70, .15, robot.driveTrain.getHeading(), DistanceUnit.CM);
+                        robot.driveTrain.park();
+                    }
+                }),
                 new ActionType("Strafe to 10cm Left", new Runnable() {
                     @Override
                     public void run() {
@@ -109,7 +116,6 @@ public class AutonomousTesterNew extends LinearOpMode {
                         robot.driveTrain.park();
                     }
                 }),
-
                 new ActionType("Skip a column while going Right", new Runnable() {
                     double targetAngle = robot.driveTrain.getHeading();
                     double power = .1;
@@ -161,7 +167,9 @@ public class AutonomousTesterNew extends LinearOpMode {
                 telemetry.addData("Color Distance Reading Left (cm)", robot.driveTrain.leftSensorDistance.getDistance(DistanceUnit.CM));
                 telemetry.addData("Color Distance Reading Right (cm)", robot.driveTrain.rightSensorDistance.getDistance(DistanceUnit.CM));
                 telemetry.addData("Heading", robot.driveTrain.getHeading());
-                telemetry.addData("MR i2c Distance (cm)", robot.driveTrain.forwardsWallDSensor.getDistance(DistanceUnit.CM));
+                telemetry.addData("Forwards Distance (cm)", robot.driveTrain.forwardsWallDistanceSensor.getDistance(DistanceUnit.CM));
+                telemetry.addData("Left Distance (cm)", robot.driveTrain.leftFacingDistanceSensor.getDistance(DistanceUnit.CM));
+                telemetry.addData("Right Distance (cm)", robot.driveTrain.rightFacingDistanceSensor.getDistance(DistanceUnit.CM));
                 telemetry.addData("Chosen Task", actions[position].name);
                 telemetry.update();
             }

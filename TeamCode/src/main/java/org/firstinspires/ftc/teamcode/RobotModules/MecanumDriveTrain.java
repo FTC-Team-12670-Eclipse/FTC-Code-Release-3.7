@@ -37,7 +37,7 @@ public class MecanumDriveTrain {
     public DistanceSensor rightSensorDistance;
     public ColorSensor leftSensorColor;
     public ColorSensor rightSensorColor;
-    public ModernRoboticsI2cRangeSensor forwardsWallDSensor;
+    public ModernRoboticsI2cRangeSensor forwardsWallDistanceSensor, leftFacingDistanceSensor, rightFacingDistanceSensor;
 
     enum DriveMode {
         NORMAL_SPEED, SLOW_MODE, RELIC_SLOW
@@ -98,7 +98,9 @@ public class MecanumDriveTrain {
         colorDistanceServo = linearOpMode.hardwareMap.servo.get(UniversalConstants.colorDistanceAutonomousServo);
 
         colorDistanceServo.setPosition(UniversalConstants.colorDistanceServoStored);
-        forwardsWallDSensor = linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, UniversalConstants.forwardsWallSensor);
+        forwardsWallDistanceSensor = linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, UniversalConstants.forwardsWallSensor);
+        leftFacingDistanceSensor = linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, UniversalConstants.leftWallSensor);
+        rightFacingDistanceSensor = linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, UniversalConstants.rightWallSensor);
 
         status("Distance Arm");
 
@@ -839,6 +841,7 @@ public class MecanumDriveTrain {
         return angles.firstAngle;
     }
 
+    //negative power is left
     public void assistedStrafe(double horizontal, double targetHeading) {
         if (targetHeading == 180 && getRawHeading() < 0) {
             targetHeading = -180;
@@ -861,7 +864,6 @@ public class MecanumDriveTrain {
         //while the robot's position is not the certain amount of distance from the white tape
         // use the color distance sensor to find the distance
         double error = dist - leftSensorDistance.getDistance(unit);
-        double currentGyro = getRawHeading();
         if (Double.isNaN(error)) {
             error = -100;
         }
@@ -1029,13 +1031,13 @@ public class MecanumDriveTrain {
 
     public void autoWallDistanceSensor(double distance, double power, DistanceUnit unit, double allowedError) {
         power = Math.abs(power);
-        double error = forwardsWallDSensor.getDistance(unit) - distance;
+        double error = forwardsWallDistanceSensor.getDistance(unit) - distance;
         // double lastError = error;
         if (Double.isNaN(error)) {
             error = 100;
         }
         while (opModeIsActive() && Math.abs(error) > allowedError) {
-            error = forwardsWallDSensor.getDistance(unit) - distance;
+            error = forwardsWallDistanceSensor.getDistance(unit) - distance;
             //if (error / lastError < 0) {
             //    return;
             //}
@@ -1044,6 +1046,48 @@ public class MecanumDriveTrain {
             }
             //lastError = error;
             translateBy(Math.signum(error) * power, 0, 0);
+        }
+    }
+
+    public void autoLeftDistanceSensor(double distance, double power, double targetHeading, DistanceUnit unit) {
+        autoLeftDistanceSensor(distance, power, targetHeading, unit, .5);
+    }
+
+    public void autoLeftDistanceSensor(double distance, double power, double targetHeading, DistanceUnit unit, double allowedError) {
+        power = Math.abs(power);
+        double error = distance - forwardsWallDistanceSensor.getDistance(unit);
+        // double lastError = error;
+        if (Double.isNaN(error)) {
+            error = 100;
+        }
+        while (opModeIsActive() && Math.abs(error) > allowedError) {
+            error = distance - leftFacingDistanceSensor.getDistance(unit);
+            if (Double.isNaN(error)) {
+                error = 100;
+            }
+            // negative error -> go left
+            assistedStrafe(Math.signum(error) * power, targetHeading);
+        }
+    }
+
+    public void autoRightDistanceSensor(double distance, double power, double targetHeading, DistanceUnit unit) {
+        autoRightDistanceSensor(distance, power, targetHeading, unit, .5);
+    }
+
+    public void autoRightDistanceSensor(double distance, double power, double targetHeading, DistanceUnit unit, double allowedError) {
+        power = Math.abs(power);
+        double error = rightFacingDistanceSensor.getDistance(unit);
+        // double lastError = error;
+        if (Double.isNaN(error)) {
+            error = 100;
+        }
+        while (opModeIsActive() && Math.abs(error) > allowedError) {
+            error = rightFacingDistanceSensor.getDistance(unit) - distance;
+            if (Double.isNaN(error)) {
+                error = 100;
+            }
+            // negative error -> go left
+            assistedStrafe(Math.signum(error) * power, targetHeading);
         }
     }
 

@@ -42,11 +42,13 @@ public class UniversalConstants {
     public static final String jewelGimbleWrist = "jgw"; // earlier top
     public static final String jewelColorSensor = "jcs";
     public static final String forwardsWallSensor = "fws";
+    public static final String leftWallSensor = "lws";
+    public static final String rightWallSensor = "rws";
 
     public static final String leftSensorDistanceServo = "sdsl";
     public static final String rightSensorDistanceServo = "sdsr";
 
-    public static final double jewelWristStored = 0;
+    public static final double jewelWristStored = .05;
     public static final double jewelWristLowered = .53; // .62 for robot 1;
     public static final double jewelWristForwards = .8;
     public static final double jewelWristForwardsAway = 1;
