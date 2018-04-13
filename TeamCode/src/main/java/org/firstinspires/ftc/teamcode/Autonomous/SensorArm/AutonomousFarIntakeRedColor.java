@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Autonomous.SensorArm;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -7,11 +7,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.teamcode.AutonomousUtil;
 import org.firstinspires.ftc.teamcode.RobotModules.Robot;
+import org.firstinspires.ftc.teamcode.UniversalConstants;
 
 @Disabled
-@Autonomous(name = "Blue FAR Color")
-public class AutonomousFarIntakeBlueColor extends LinearOpMode {
+@Autonomous(name = "Red FAR Color")
+public class AutonomousFarIntakeRedColor extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -22,30 +24,16 @@ public class AutonomousFarIntakeBlueColor extends LinearOpMode {
         Robot robot = new Robot(this, true, true, true, DcMotor.ZeroPowerBehavior.BRAKE);
         robot.addAndUpdateTelemetry("Ready to go!");
         RelicRecoveryVuMark vuMark;
-        AutonomousUtil.AllianceColor color = AutonomousUtil.getColorToDislodge(this, AutonomousUtil.AllianceColor.Red, robot);
+        AutonomousUtil.AllianceColor color = AutonomousUtil.getColorToDislodge(this, AutonomousUtil.AllianceColor.Blue, robot);
 
         waitForStart();
 
         robot.vuforiaRelicRecoveryGetter.activateTrackables();
         vuMark = robot.vuforiaRelicRecoveryGetter.getPattern();
         robot.relicMecanism.swingElbowUp();
+        robot.driveTrain.swingColorDistanceDown();
         robot.jewelSwatter.removeJewelOfColor(color);
-        AutonomousUtil.driveRobotOffRamp(robot, AutonomousUtil.AllianceColor.Blue);
-
-        robot.relicMecanism.swingAwayFromWall();
-
-        if (vuMark == RelicRecoveryVuMark.UNKNOWN) {
-            vuMark = robot.vuforiaRelicRecoveryGetter.getPattern();
-        }
-        robot.driveTrain.moveToInches(3, .25 * FORWARDS_SPEED_MODIFIER);
-        robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, -90);
-        robot.driveTrain.autoWallDistanceSensor(100, .25, DistanceUnit.CM, 5);
-
-        double targetAngle = 180;
-
-        robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, targetAngle);
-
-        robot.driveTrain.autoWallDistanceSensor(28, .15 * FORWARDS_SPEED_MODIFIER, DistanceUnit.CM);
+        robot.driveTrain.autoWallDistanceSensor(26, .15 * FORWARDS_SPEED_MODIFIER, DistanceUnit.CM);
 
         robot.relicMecanism.swingAwayFromWall();
 
@@ -53,12 +41,14 @@ public class AutonomousFarIntakeBlueColor extends LinearOpMode {
             vuMark = robot.vuforiaRelicRecoveryGetter.getPattern();
         }
 
+        double targetAngle = 0;
 
         robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, targetAngle);
 
         double power = .1;
-        double distance = UniversalConstants.distanceBlueODS;
+        double distance = UniversalConstants.distanceRedODS;
         DistanceUnit unit = DistanceUnit.CM;
+
 
         switch (vuMark) {
             case LEFT:
@@ -80,29 +70,27 @@ public class AutonomousFarIntakeBlueColor extends LinearOpMode {
                 robot.driveTrain.park();
                 robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, targetAngle);
                 robot.driveTrain.swingColorDistanceDown();
-                robot.driveTrain.park();
-                robot.driveTrain.strafeToDistanceLeft(.07 * STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
+                robot.driveTrain.strafeToDistanceLeft(power * STRAFE_SPEED_MODIFIER, distance, targetAngle, unit);
                 robot.driveTrain.park();
                 break;
         }
 
         robot.driveTrain.storeColorDistance();
 
-        robot.driveTrain.moveToInches(-3, .15 * FORWARDS_SPEED_MODIFIER);
-        robot.intakeMecanism.deployFoldoutIntake();
-        robot.intakeMecanism.intake();
-        sleep(50);
-        robot.intakeMecanism.outtakeSlowly();
-        robot.intakeMecanism.setIntakePowers(.5, -.5);
-        sleep(500);
-        robot.intakeMecanism.setIntakePowers(-.5, -.5);
-        robot.driveTrain.moveToInches(7, .15 * FORWARDS_SPEED_MODIFIER);
 
-        robot.driveTrain.moveToInches(-8, .15 * FORWARDS_SPEED_MODIFIER);
+        robot.intakeMecanism.deployFoldoutIntake();
+        robot.intakeMecanism.outtakeSlowly();
+        robot.intakeMecanism.setIntakePowers(.35, -.35);
+        sleep(500);
+        robot.intakeMecanism.setIntakePowersOverride(-.25);
+        robot.driveTrain.moveToInches(3, .15 * FORWARDS_SPEED_MODIFIER);
+
+        robot.driveTrain.moveToInches(-9, .15 * FORWARDS_SPEED_MODIFIER);
 
         robot.intakeMecanism.stopIntake();
         robot.relicMecanism.storeServos();
 
         stop();
+
     }
 }

@@ -37,7 +37,7 @@ public class MecanumDriveTrain {
     public DistanceSensor rightSensorDistance;
     public ColorSensor leftSensorColor;
     public ColorSensor rightSensorColor;
-    public ModernRoboticsI2cRangeSensor forwardsWallDistanceSensor, leftFacingDistanceSensor, rightFacingDistanceSensor;
+    public SmartRangeMR forwardsWallDistanceSensor, leftFacingDistanceSensor, rightFacingDistanceSensor;
 
     enum DriveMode {
         NORMAL_SPEED, SLOW_MODE, RELIC_SLOW
@@ -98,9 +98,9 @@ public class MecanumDriveTrain {
         colorDistanceServo = linearOpMode.hardwareMap.servo.get(UniversalConstants.colorDistanceAutonomousServo);
 
         colorDistanceServo.setPosition(UniversalConstants.colorDistanceServoStored);
-        forwardsWallDistanceSensor = linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, UniversalConstants.forwardsWallSensor);
-        leftFacingDistanceSensor = linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, UniversalConstants.leftWallSensor);
-        rightFacingDistanceSensor = linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, UniversalConstants.rightWallSensor);
+        forwardsWallDistanceSensor = new SmartRangeMR(linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, UniversalConstants.forwardsWallSensor));
+        leftFacingDistanceSensor = new SmartRangeMR(linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, UniversalConstants.leftWallSensor));
+        rightFacingDistanceSensor = new SmartRangeMR(linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, UniversalConstants.rightWallSensor));
 
         status("Distance Arm");
 
@@ -1076,7 +1076,7 @@ public class MecanumDriveTrain {
 
     public void autoRightDistanceSensor(double distance, double power, double targetHeading, DistanceUnit unit, double allowedError) {
         power = Math.abs(power);
-        double error = rightFacingDistanceSensor.getDistance(unit);
+        double error = rightFacingDistanceSensor.getDistance(unit) - distance;
         // double lastError = error;
         if (Double.isNaN(error)) {
             error = 100;

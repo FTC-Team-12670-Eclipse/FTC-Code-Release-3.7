@@ -21,7 +21,6 @@ public class AutonomousTesterNew extends LinearOpMode {
             name = actionName;
             action = actionAction;
         }
-
     }
 
     @Override
