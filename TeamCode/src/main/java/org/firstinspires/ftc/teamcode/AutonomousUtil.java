@@ -61,6 +61,8 @@ public class AutonomousUtil {
             l.telemetry.addLine("Dislodge Blue: Game pad 1");
             l.telemetry.addLine("Dislodge Red: Game pad 2");
             l.telemetry.addLine("Hold both triggers to switch color");
+            l.telemetry.addData("Left Side", robot.driveTrain.leftFacingDistanceSensor.getDistance(DistanceUnit.CM));
+            l.telemetry.addData("Right Side", robot.driveTrain.rightFacingDistanceSensor.getDistance(DistanceUnit.CM));
             l.telemetry.update();
         }
         return color;

@@ -56,7 +56,7 @@ public class AutonomousFarIntakeRedEncoder extends LinearOpMode {
         robot.intakeMecanism.deployFoldoutIntake();
         robot.intakeMecanism.intake();
         sleep(250);
-        robot.intakeMecanism.outtakeSlowly();
+        robot.intakeMecanism.outtakeFully();
         robot.intakeMecanism.outtake();
         robot.driveTrain.moveToInches(8, moveToPositionPower);
         robot.driveTrain.moveToInches(-5, moveToPositionPower);

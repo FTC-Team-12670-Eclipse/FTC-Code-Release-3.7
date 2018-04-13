@@ -109,7 +109,7 @@ public class AutonomousFarIntakeBlueColorMG extends LinearOpMode {
 
         robot.driveTrain.swingColorDistanceUp();
         robot.intakeMecanism.deployFoldoutIntake();
-        robot.intakeMecanism.outtakeSlowly();
+        robot.intakeMecanism.outtakeFully();
         robot.intakeMecanism.setIntakePowers(.5, -.5);
         sleep(500);
         robot.intakeMecanism.setIntakePowersOverride(-1);
@@ -135,7 +135,7 @@ public class AutonomousFarIntakeBlueColorMG extends LinearOpMode {
 
         robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, targetAngle);
         robot.driveTrain.moveToInches(4, .25 * FORWARDS_SPEED_MODIFIER);
-        robot.intakeMecanism.outtakeSlowly();
+        robot.intakeMecanism.outtakeFully();
         robot.intakeMecanism.setIntakePowers(.5, -.5);
         sleep(500);
         robot.intakeMecanism.setIntakePowers(-.75);

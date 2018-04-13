@@ -732,7 +732,7 @@ public class MecanumDriveTrain {
         if (Math.abs(getError(angle)) < HEADING_THRESHOLD) {
             return;
         }
-        double timeout = linearOpMode.getRuntime() + 10;
+        double timeout = linearOpMode.getRuntime() + 2.5;
         while (opModeIsActive() && linearOpMode.getRuntime() < timeout && !slowOnHeading(minSpeed, maxSpeed, angle, kP, HEADING_THRESHOLD)) {
             // Update telemetry & Allow time for other processes to run.
             telemetry.update();
@@ -780,7 +780,7 @@ public class MecanumDriveTrain {
         if (Math.abs(getError(angle)) < HEADING_THRESHOLD) {
             return;
         }
-        double timeout = linearOpMode.getRuntime() + 4;
+        double timeout = linearOpMode.getRuntime() + 2.5;
         while (opModeIsActive() && linearOpMode.getRuntime() < timeout && !onHeading(speed, angle, kP, HEADING_THRESHOLD)) {
             // Update telemetry & Allow time for other processes to run.
             telemetry.update();
@@ -850,8 +850,8 @@ public class MecanumDriveTrain {
         // positive degrees are to the left
         // so, to turn left we want a negative offAngle.
         double offAngle = getRawHeading() - targetHeading;
-        double P_VALUE = .005;
-        double turnValue = offAngle * P_VALUE;
+        double kP = .005;
+        double turnValue = offAngle * kP;
         translateBy(0, horizontal, Range.clip(turnValue, -.1, .1));
     }
 

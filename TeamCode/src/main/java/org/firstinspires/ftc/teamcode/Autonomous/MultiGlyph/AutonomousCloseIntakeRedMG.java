@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.AutonomousUtil;
 import org.firstinspires.ftc.teamcode.RobotModules.Robot;
@@ -30,7 +29,6 @@ public class AutonomousCloseIntakeRedMG extends LinearOpMode {
         robot.relicMecanism.swingElbowUp();
         robot.intakeMecanism.deployFoldoutIntake();
         robot.jewelSwatter.removeJewelOfColor(color);
-        AutonomousUtil.driveRobotOffRamp(robot, AutonomousUtil.AllianceColor.Red);
 
         robot.relicMecanism.swingAwayFromWall();
 
@@ -38,73 +36,68 @@ public class AutonomousCloseIntakeRedMG extends LinearOpMode {
             vuMark = robot.vuforiaRelicRecoveryGetter.getPattern();
         }
 
-        double targetAngle = 90;
-        robot.driveTrain.gyroTurn(.05 * TURN_SPEED_MODIFIER, targetAngle);
+        double targetAngle = -90;
 
+        double closestPosition = 27;
         switch (vuMark) {
-            case LEFT:
-                robot.driveTrain.encoderStrafeToInches(4.5, .25);
-                break;
             case CENTER:
-                robot.driveTrain.encoderStrafeToInches(4.5 / 2, .25);
+                robot.driveTrain.moveToInches(closestPosition + 6.75, .25);
+                break;
+            case LEFT:
+                robot.driveTrain.moveToInches(closestPosition + 13.5, .25);
+                break;
+            case RIGHT:
+            default:
+                robot.driveTrain.moveToInches(closestPosition, .25);
                 break;
         }
         robot.driveTrain.park();
+        robot.driveTrain.gyroTurn(.05, targetAngle);
 
-        robot.driveTrain.moveToInches(2.5, .1 * FORWARDS_SPEED_MODIFIER);
+        robot.driveTrain.moveToInches(2.5, .25 * FORWARDS_SPEED_MODIFIER);
 
         robot.intakeMecanism.deployFoldoutIntake();
-        robot.intakeMecanism.outtakeSlowly();
-        robot.intakeMecanism.setIntakePowers(.35, -.35);
-        sleep(500);
-        robot.intakeMecanism.setIntakePowersOverride(-.25);
-        robot.driveTrain.moveToInches(8, .2 * FORWARDS_SPEED_MODIFIER);
+        robot.intakeMecanism.outtakeFully();
+        robot.intakeMecanism.setIntakePowersOverride(-1);
+        robot.driveTrain.moveToInches(4, .15 * FORWARDS_SPEED_MODIFIER);
 
-        robot.driveTrain.moveToInches(-10, .25 * FORWARDS_SPEED_MODIFIER);
+        robot.driveTrain.moveToInches(-10, .15 * FORWARDS_SPEED_MODIFIER);
 
         robot.intakeMecanism.stopIntake();
         robot.relicMecanism.storeServos();
-
-        targetAngle = -90;
-        robot.driveTrain.gyroTurn(.05, targetAngle);
-
-        robot.intakeMecanism.intake();
-        robot.driveTrain.moveToInches(25, .25);
-        robot.driveTrain.moveToInches(-15, .25);
 
         targetAngle = 90;
         robot.driveTrain.gyroTurn(.05, targetAngle);
 
-        robot.driveTrain.park();
+        robot.intakeMecanism.intake();
+        robot.driveTrain.moveToInches(25, .25);
+        robot.driveTrain.moveToInches(-20, .25);
+
+        targetAngle = -90;
 
         switch (vuMark) {
             case CENTER:
-                robot.driveTrain.encoderStrafeToInches(5.5 / 2, .25);
-                robot.driveTrain.moveToInches(4, .25);
+                robot.driveTrain.gyroTurn(.05, targetAngle - 25);
                 break;
             case LEFT:
-                robot.driveTrain.gyroTurn(.05, targetAngle - 20);
+                robot.driveTrain.gyroTurn(.05, targetAngle - 30);
                 break;
             case RIGHT:
             default:
-                robot.driveTrain.gyroTurn(.05, targetAngle + 20);
+                robot.driveTrain.gyroTurn(.05, targetAngle + 30);
                 break;
         }
 
-        robot.driveTrain.moveToInches(12, .2 * FORWARDS_SPEED_MODIFIER);
+        robot.driveTrain.moveToInches(15, .5 * FORWARDS_SPEED_MODIFIER);
 
-        robot.intakeMecanism.outtakeSlowly();
-        robot.intakeMecanism.setIntakePowers(.35, -.35);
-        sleep(500);
-        robot.intakeMecanism.setIntakePowersOverride(-.25);
+        robot.intakeMecanism.outtakeFully();
+        robot.intakeMecanism.setIntakePowers(-1);
 
-        robot.driveTrain.moveToInches(8, .2 * FORWARDS_SPEED_MODIFIER);
-
-        robot.driveTrain.moveToInches(-10, .25 * FORWARDS_SPEED_MODIFIER);
+        robot.driveTrain.moveToInches(3, .15 * FORWARDS_SPEED_MODIFIER);
+        robot.driveTrain.moveToInches(-8, .15 * FORWARDS_SPEED_MODIFIER);
 
         robot.intakeMecanism.stopIntake();
         robot.relicMecanism.storeServos();
-
 
     }
 }

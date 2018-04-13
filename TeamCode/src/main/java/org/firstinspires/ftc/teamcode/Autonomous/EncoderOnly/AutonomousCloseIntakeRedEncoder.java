@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.Autonomous.EncoderOnly;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -66,7 +65,7 @@ public class AutonomousCloseIntakeRedEncoder extends LinearOpMode {
         robot.intakeMecanism.deployFoldoutIntake();
         robot.intakeMecanism.intake();
         sleep(250);
-        robot.intakeMecanism.outtakeSlowly();
+        robot.intakeMecanism.outtakeFully();
         robot.intakeMecanism.outtake();
 
         robot.driveTrain.moveToInches(3, moveToPositionPower);

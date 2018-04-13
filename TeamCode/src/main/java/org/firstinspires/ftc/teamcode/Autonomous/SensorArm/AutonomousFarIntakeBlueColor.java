@@ -94,7 +94,7 @@ public class AutonomousFarIntakeBlueColor extends LinearOpMode {
         robot.intakeMecanism.deployFoldoutIntake();
         robot.intakeMecanism.intake();
         sleep(50);
-        robot.intakeMecanism.outtakeSlowly();
+        robot.intakeMecanism.outtakeFully();
         robot.intakeMecanism.setIntakePowers(.5, -.5);
         sleep(500);
         robot.intakeMecanism.setIntakePowers(-.5, -.5);

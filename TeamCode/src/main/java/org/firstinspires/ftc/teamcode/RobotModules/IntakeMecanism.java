@@ -73,7 +73,7 @@ public class IntakeMecanism {
         ((DcMotorEx) infeedRight).setVelocity(r * 380, AngleUnit.DEGREES);
     }
 
-    public void outtakeSlowly() {
+    public void outtakeFully() {
         double targetAvg = getAvgPosition() - UniversalConstants.ticksPerMotorRotation * 1.5;
         setIntakePowers(-1);
         while (getAvgPosition() > targetAvg) {

@@ -83,7 +83,7 @@ public class AutonomousCloseIntakeRedExtraGlyphs extends LinearOpMode {
         robot.driveTrain.moveToInches(-5, .25);
         robot.intakeMecanism.stopIntake();
         robot.driveTrain.moveToInches(-10, .25);
-        robot.intakeMecanism.outtakeSlowly();
+        robot.intakeMecanism.outtakeFully();
         robot.intakeMecanism.intake();
         robot.driveTrain.moveToInches(4, .25);
         robot.driveTrain.moveToInches(-14, .25);

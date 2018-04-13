@@ -103,7 +103,7 @@ public class AutonomousCloseDunkBlueMG extends LinearOpMode {
         }
 
         robot.driveTrain.moveToPositionInches(-10, moveToPositionPower);
-        robot.intakeMecanism.outtakeSlowly();
+        robot.intakeMecanism.outtakeFully();
         robot.intakeMecanism.intake();
 
         robot.driveTrain.moveToPositionInches(7, moveToPositionPower);
