@@ -85,7 +85,7 @@ public class AutonomousFarIntakeRedMG extends LinearOpMode {
                 robot.driveTrain.encoderStrafeToInches(FAR_DISTANCE - CLOSE_DISTANCE, moveToPositionPower, targetAngle);
                 break;
         }
-        robot.driveTrain.autoRightDistanceSensor(FAR_US_DISTANCE, .5 * moveToPositionPower, targetAngle, DistanceUnit.CM, 2);
+        robot.driveTrain.autoRightDistanceSensor(FAR_US_DISTANCE, .3, targetAngle, DistanceUnit.CM, 2);
         robot.driveTrain.park();
 
         targetAngle = 155;
@@ -113,13 +113,14 @@ public class AutonomousFarIntakeRedMG extends LinearOpMode {
         robot.driveTrain.gyroTurn(.05, -15);
 
         robot.driveTrain.moveToInches(4, .15);
+        robot.intakeMecanism.outtakeFully();
+
         robot.slamDunker.dunkMotor.setPower(UniversalConstants.dunkGlyphsSpeed * 3);
         robot.slamDunker.dunkMotor.setTargetPosition(robot.slamDunker.dunkMotor.getTargetPosition() + 75);
-        robot.intakeMecanism.outtakeFully();
 
         robot.intakeMecanism.setIntakePowers(.5, -.5);
         sleep(500);
-        robot.slamDunker.dunkMotor.setTargetPosition(robot.slamDunker.dunkMotor.getTargetPosition() - 70);
+        robot.slamDunker.dunkMotor.setTargetPosition(robot.slamDunker.dunkMotor.getTargetPosition() - 75);
         robot.intakeMecanism.setIntakePowers(-1);
         robot.slamDunker.dunkMotor.setPower(0);
         robot.driveTrain.moveToInches(6, .15);
