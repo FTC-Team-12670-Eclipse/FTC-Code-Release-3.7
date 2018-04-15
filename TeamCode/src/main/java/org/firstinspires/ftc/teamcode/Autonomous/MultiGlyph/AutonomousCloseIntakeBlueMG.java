@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.AutonomousUtil;
 import org.firstinspires.ftc.teamcode.RobotModules.Robot;
+import org.firstinspires.ftc.teamcode.UniversalConstants;
 
 @Autonomous(name = "Blue CLOSE MG")
 public class AutonomousCloseIntakeBlueMG extends LinearOpMode {
@@ -91,9 +92,18 @@ public class AutonomousCloseIntakeBlueMG extends LinearOpMode {
         robot.driveTrain.moveToInches(12, .5 * FORWARDS_SPEED_MODIFIER);
 
         robot.intakeMecanism.outtakeFully();
-        robot.intakeMecanism.setIntakePowers(-1);
 
-        robot.driveTrain.moveToInches(3, .15 * FORWARDS_SPEED_MODIFIER);
+        robot.slamDunker.dunkMotor.setPower(UniversalConstants.dunkGlyphsSpeed * 3);
+        robot.slamDunker.dunkMotor.setTargetPosition(robot.slamDunker.dunkMotor.getTargetPosition() + 150);
+
+        robot.intakeMecanism.setIntakePowers(-.5, .5);
+        sleep(500);
+
+        robot.slamDunker.dunkMotor.setTargetPosition(robot.slamDunker.dunkMotor.getTargetPosition() - 150);
+
+        robot.intakeMecanism.setIntakePowers(-1);
+        robot.slamDunker.dunkMotor.setPower(0);
+        robot.driveTrain.moveToInches(6, .15 * FORWARDS_SPEED_MODIFIER);
         robot.driveTrain.moveToInches(-8, .15 * FORWARDS_SPEED_MODIFIER);
         robot.driveTrain.moveToInches(4, .15 * FORWARDS_SPEED_MODIFIER);
         robot.driveTrain.moveToInches(-5, .15 * FORWARDS_SPEED_MODIFIER);

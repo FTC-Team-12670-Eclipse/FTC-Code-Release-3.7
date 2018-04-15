@@ -56,7 +56,7 @@ public class MecanumDriveTrain {
         telemetry.update();
     }
 
-    public MecanumDriveTrain(LinearOpMode l, DcMotor.ZeroPowerBehavior zeroPowerBehavior, boolean useImu) {
+    public MecanumDriveTrain(LinearOpMode l, DcMotor.ZeroPowerBehavior zeroPowerBehavior, boolean useSensors) {
         driveMode = DriveMode.NORMAL_SPEED;
         telemetry = l.telemetry;
         linearOpMode = l;
@@ -88,23 +88,24 @@ public class MecanumDriveTrain {
 
         status("Direction");
 
-        leftSensorDistance = linearOpMode.hardwareMap.get(DistanceSensor.class, UniversalConstants.leftSensorDistanceServo);
-        rightSensorDistance = linearOpMode.hardwareMap.get(DistanceSensor.class, UniversalConstants.rightSensorDistanceServo);
-        leftSensorColor = linearOpMode.hardwareMap.get(ColorSensor.class, UniversalConstants.leftSensorDistanceServo);
-        rightSensorColor = linearOpMode.hardwareMap.get(ColorSensor.class, UniversalConstants.rightSensorDistanceServo);
-        leftSensorColor.enableLed(true);
-        rightSensorColor.enableLed(true);
 
-        colorDistanceServo = linearOpMode.hardwareMap.servo.get(UniversalConstants.colorDistanceAutonomousServo);
+        if (useSensors) {
+            leftSensorDistance = linearOpMode.hardwareMap.get(DistanceSensor.class, UniversalConstants.leftSensorDistanceServo);
+            rightSensorDistance = linearOpMode.hardwareMap.get(DistanceSensor.class, UniversalConstants.rightSensorDistanceServo);
+            leftSensorColor = linearOpMode.hardwareMap.get(ColorSensor.class, UniversalConstants.leftSensorDistanceServo);
+            rightSensorColor = linearOpMode.hardwareMap.get(ColorSensor.class, UniversalConstants.rightSensorDistanceServo);
+            leftSensorColor.enableLed(true);
+            rightSensorColor.enableLed(true);
 
-        colorDistanceServo.setPosition(UniversalConstants.colorDistanceServoStored);
-        forwardsWallDistanceSensor = new SmartRangeMR(linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, UniversalConstants.forwardsWallSensor));
-        leftFacingDistanceSensor = new SmartRangeMR(linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, UniversalConstants.leftWallSensor));
-        rightFacingDistanceSensor = new SmartRangeMR(linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, UniversalConstants.rightWallSensor));
+            colorDistanceServo = linearOpMode.hardwareMap.servo.get(UniversalConstants.colorDistanceAutonomousServo);
 
-        status("Distance Arm");
+            colorDistanceServo.setPosition(UniversalConstants.colorDistanceServoStored);
+            forwardsWallDistanceSensor = new SmartRangeMR(linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, UniversalConstants.forwardsWallSensor));
+            leftFacingDistanceSensor = new SmartRangeMR(linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, UniversalConstants.leftWallSensor));
+            rightFacingDistanceSensor = new SmartRangeMR(linearOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, UniversalConstants.rightWallSensor));
 
-        if (useImu) {
+            status("Distance Arm");
+
             BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
             parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
             parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;

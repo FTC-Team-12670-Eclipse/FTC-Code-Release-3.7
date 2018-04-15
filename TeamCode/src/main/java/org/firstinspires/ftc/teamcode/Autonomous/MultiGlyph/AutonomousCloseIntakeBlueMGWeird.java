@@ -10,6 +10,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.AutonomousUtil;
 import org.firstinspires.ftc.teamcode.RobotModules.Robot;
 import org.firstinspires.ftc.teamcode.UniversalConstants;
+
 @Disabled
 @Autonomous(name = "Blue CLOSE MG 3")
 public class AutonomousCloseIntakeBlueMGWeird extends LinearOpMode {
@@ -19,10 +20,6 @@ public class AutonomousCloseIntakeBlueMGWeird extends LinearOpMode {
         double TURN_SPEED_MODIFIER = 1;
         double STRAFE_SPEED_MODIFIER = 1;
         double FORWARDS_SPEED_MODIFIER = 1;
-
-        double turnAmt = 60;
-        double sideDistance = 9;
-        double sidePower = .25;
 
         Robot robot = new Robot(this, true, true, true, DcMotor.ZeroPowerBehavior.BRAKE);
         robot.addAndUpdateTelemetry("Ready to go!");
@@ -45,14 +42,14 @@ public class AutonomousCloseIntakeBlueMGWeird extends LinearOpMode {
         double closestPosition = -27;
         switch (vuMark) {
             case CENTER:
-                robot.driveTrain.autoWallDistanceSensor(118, .4, DistanceUnit.CM, 1);
+                robot.driveTrain.moveToInches(closestPosition - 6.75, .25);
                 break;
             case RIGHT:
-                robot.driveTrain.autoWallDistanceSensor(136, .4, DistanceUnit.CM, 1);
+                robot.driveTrain.moveToInches(closestPosition - 13.5, .25);
                 break;
             case LEFT:
             default:
-                robot.driveTrain.autoWallDistanceSensor(98, .4, DistanceUnit.CM, 1);
+                robot.driveTrain.moveToInches(closestPosition, .25);
                 break;
         }
         robot.driveTrain.park();
@@ -75,22 +72,23 @@ public class AutonomousCloseIntakeBlueMGWeird extends LinearOpMode {
 
         targetAngle = -90;
 
+        robot.driveTrain.gyroTurn(.05, targetAngle);
+
         switch (vuMark) {
             case CENTER:
-                robot.driveTrain.gyroTurn(.05, targetAngle - turnAmt);
-                break;
             case RIGHT:
-                robot.driveTrain.gyroTurn(.05, targetAngle + turnAmt);
+                //left 1 column
+                robot.driveTrain.encoderStrafeToInches(3, .25);
                 break;
             case LEFT:
             default:
-                robot.driveTrain.gyroTurn(.05, targetAngle - turnAmt);
+                //right 1 column
+                robot.driveTrain.encoderStrafeToInches(-3, .25);
                 break;
         }
 
-        robot.driveTrain.moveToInches(sideDistance, sidePower * FORWARDS_SPEED_MODIFIER);
         robot.driveTrain.gyroTurn(.05, targetAngle);
-        robot.driveTrain.moveToInches(7, .5 * FORWARDS_SPEED_MODIFIER);
+        robot.driveTrain.moveToInches(4, .5 * FORWARDS_SPEED_MODIFIER);
 
         robot.intakeMecanism.outtakeFully();
 
@@ -115,25 +113,26 @@ public class AutonomousCloseIntakeBlueMGWeird extends LinearOpMode {
 
         targetAngle = -90;
 
+        robot.driveTrain.gyroTurn(.05, targetAngle);
+
         switch (vuMark) {
             case CENTER:
-                robot.driveTrain.gyroTurn(.05, targetAngle + turnAmt);
+                //right 2 columns
+                robot.driveTrain.encoderStrafeToInches(-6.5, .25);
                 break;
             case RIGHT:
-                robot.driveTrain.gyroTurn(.05, targetAngle + turnAmt);
+                //left 1 column
+                robot.driveTrain.encoderStrafeToInches(3, .25);
                 break;
             case LEFT:
             default:
-                robot.driveTrain.gyroTurn(.05, targetAngle - turnAmt);
+                //right 1 column
+                robot.driveTrain.encoderStrafeToInches(-3, .25);
                 break;
         }
 
-        if (vuMark == RelicRecoveryVuMark.CENTER) {
-            robot.driveTrain.moveToInchesCoast(sideDistance, sidePower * FORWARDS_SPEED_MODIFIER);
-        }
-        robot.driveTrain.moveToInches(sideDistance, sidePower * FORWARDS_SPEED_MODIFIER);
         robot.driveTrain.gyroTurn(.05, targetAngle);
-        robot.driveTrain.moveToInches(15, .5 * FORWARDS_SPEED_MODIFIER);
+        robot.driveTrain.moveToInches(13, .5 * FORWARDS_SPEED_MODIFIER);
 
         robot.intakeMecanism.outtakeFully();
 
@@ -149,6 +148,6 @@ public class AutonomousCloseIntakeBlueMGWeird extends LinearOpMode {
         robot.slamDunker.dunkMotor.setPower(0);
         robot.driveTrain.moveToInches(-8, .15);
 
-        robot.relicMecanism.storeServos();
+        robot.relicMecanism.swingElbowUp();
     }
 }

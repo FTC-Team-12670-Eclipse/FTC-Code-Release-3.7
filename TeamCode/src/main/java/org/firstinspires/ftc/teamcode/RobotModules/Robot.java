@@ -28,7 +28,7 @@ public class Robot {
     public VuforiaRelicRecoveryGetter vuforiaRelicRecoveryGetter;
     public RelicMechanism relicMecanism;
 
-    public Robot(LinearOpMode l, boolean useVuforia, boolean useImu, boolean storeSwatter, DcMotor.ZeroPowerBehavior zeroPowerBehavior) {
+    public Robot(LinearOpMode l, boolean useVuforia, boolean useSensors, boolean storeSwatter, DcMotor.ZeroPowerBehavior zeroPowerBehavior) {
         // OpModeManagerImpl opModeManager = (OpModeManagerImpl) l.internalOpModeServices;
         // this line of code will later help us automate the Autonomous to TeleOp Transition!
         // https://github.com/NoahAndrews/FtcAutoTransitioner/blob/master/library/src/main/java/net/kno3/ftcautotransitioner/AutoTransitioner.java
@@ -42,7 +42,7 @@ public class Robot {
         linearOpMode.telemetry.addLine("Before Mecanum");
         linearOpMode.telemetry.update();
         if (mecanumDriveTrainExists) {
-            driveTrain = new MecanumDriveTrain(l, zeroPowerBehavior, useImu);
+            driveTrain = new MecanumDriveTrain(l, zeroPowerBehavior, useSensors);
         }
         linearOpMode.telemetry.addLine("After Mecanum");
         linearOpMode.telemetry.update();
