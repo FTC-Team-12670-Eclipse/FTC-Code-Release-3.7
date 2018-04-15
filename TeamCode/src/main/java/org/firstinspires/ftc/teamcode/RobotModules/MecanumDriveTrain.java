@@ -1053,7 +1053,8 @@ public class MecanumDriveTrain {
         autoLeftDistanceSensor(distance, power, targetHeading, unit, .5);
     }
 
-    public void autoLeftDistanceSensor(double distance, double power, double targetHeading, DistanceUnit unit, double allowedError) {
+    public void autoLeftDistanceSensor(double distance, double power,
+                                       double targetHeading, DistanceUnit unit, double allowedError) {
         power = Math.abs(power);
         double error = distance - forwardsWallDistanceSensor.getDistance(unit);
         // double lastError = error;

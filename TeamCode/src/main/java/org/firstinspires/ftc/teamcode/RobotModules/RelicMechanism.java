@@ -75,10 +75,14 @@ public class RelicMechanism {
         controller2.update();
 
         if (controller2.left_trigger > .5) {
-            spoolMotor.setTargetPosition(Range.clip(spoolMotor.getCurrentPosition() - spoolOffsetPosition, 0, UniversalConstants.relicMotorLimit));
+            spoolMotor.setTargetPosition(
+                    Range.clip(spoolMotor.getCurrentPosition() - spoolOffsetPosition,
+                            0, UniversalConstants.relicMotorLimit));
             lastUpdateTime = linearOpMode.getRuntime();
         } else if (controller2.right_trigger > .5) {
-            spoolMotor.setTargetPosition(Range.clip(spoolMotor.getCurrentPosition() + spoolOffsetPosition, 0, UniversalConstants.relicMotorLimit));
+            spoolMotor.setTargetPosition(
+                    Range.clip(spoolMotor.getCurrentPosition() + spoolOffsetPosition,
+                            0, UniversalConstants.relicMotorLimit));
             lastUpdateTime = linearOpMode.getRuntime();
         }
 
@@ -91,15 +95,22 @@ public class RelicMechanism {
 
         double servoMoveSpeed = .02;
         if (linearOpMode.gamepad2.dpad_down) {
-            elbowServo.setPosition(Range.clip(elbowServo.getPosition() + servoMoveSpeed, UniversalConstants.relicElbowUp, UniversalConstants.relicElbowDown));
+            elbowServo.setPosition(
+                    Range.clip(elbowServo.getPosition() + servoMoveSpeed,
+                            UniversalConstants.relicElbowUp, UniversalConstants.relicElbowDown));
         } else if (linearOpMode.gamepad2.dpad_up) {
-            elbowServo.setPosition(Range.clip(elbowServo.getPosition() - servoMoveSpeed, UniversalConstants.relicElbowUp, UniversalConstants.relicElbowDown));
+            elbowServo.setPosition(
+                    Range.clip(elbowServo.getPosition() - servoMoveSpeed,
+                            UniversalConstants.relicElbowUp, UniversalConstants.relicElbowDown));
         }
 
         if (linearOpMode.gamepad2.dpad_left) {
-            pincherServo.setPosition(Range.clip(pincherServo.getPosition() + 2 * servoMoveSpeed, UniversalConstants.relicPincherPinched, UniversalConstants.relicPincherFullyOpen));
+            pincherServo.setPosition(
+                    Range.clip(pincherServo.getPosition() + 2 * servoMoveSpeed,
+                            UniversalConstants.relicPincherPinched, UniversalConstants.relicPincherFullyOpen));
         } else if (linearOpMode.gamepad2.dpad_right) {
-            pincherServo.setPosition(Range.clip(pincherServo.getPosition() - 2 * servoMoveSpeed, UniversalConstants.relicPincherPinched, UniversalConstants.relicPincherFullyOpen));
+            pincherServo.setPosition(Range.clip(pincherServo.getPosition() - 2 * servoMoveSpeed,
+                    UniversalConstants.relicPincherPinched, UniversalConstants.relicPincherFullyOpen));
         }
 
         if (linearOpMode.gamepad2.x) {

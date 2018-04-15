@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.AutonomousUtil;
 import org.firstinspires.ftc.teamcode.RobotModules.Robot;
 import org.firstinspires.ftc.teamcode.UniversalConstants;
 
-@Autonomous(name = "Red FAR Special")
+@Autonomous(name = "Red FAR Multi Glpyh")
 public class AutonomousFarIntakeRedMG extends LinearOpMode {
 
     @Override
@@ -34,9 +34,9 @@ public class AutonomousFarIntakeRedMG extends LinearOpMode {
             vuMark = robot.vuforiaRelicRecoveryGetter.getPattern();
         }
 
-        double FAR_DISTANCE = 8.25;
-        double CLOSE_DISTANCE = 3.75;
-        double MIDDLE_DISTANCE = 5.5;
+        double FAR_DISTANCE = 7.50;
+        double CLOSE_DISTANCE = 3;
+        double MIDDLE_DISTANCE = 4.75;
         double FAR_US_DISTANCE = 90;
         double CLOSE_US_DISTANCE = 55;
         double MIDDLE_US_DISTANCE = 71;
@@ -105,9 +105,9 @@ public class AutonomousFarIntakeRedMG extends LinearOpMode {
 
         if (vuMark == RelicRecoveryVuMark.LEFT) {
             robot.driveTrain.encoderStrafeToInches(-5, moveToPositionPower, targetAngle);
-            robot.driveTrain.autoRightDistanceSensor(MIDDLE_US_DISTANCE + 12, .5, targetAngle, DistanceUnit.CM, 10);
+            robot.driveTrain.autoRightDistanceSensor(MIDDLE_US_DISTANCE + 6, .5, targetAngle, DistanceUnit.CM, 5);
         } else {
-            robot.driveTrain.autoRightDistanceSensor(FAR_US_DISTANCE + 12, .5, targetAngle, DistanceUnit.CM, 3);
+            robot.driveTrain.autoRightDistanceSensor(FAR_US_DISTANCE + 6, .5, targetAngle, DistanceUnit.CM, 3);
         }
 
         robot.driveTrain.gyroTurn(.05, -15);

@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.AutonomousUtil;
 import org.firstinspires.ftc.teamcode.RobotModules.Robot;
 
-@Autonomous(name = "Red CLOSE Special")
+@Autonomous(name = "Red CLOSE MG")
 public class AutonomousCloseIntakeRedMG extends LinearOpMode {
 
     @Override

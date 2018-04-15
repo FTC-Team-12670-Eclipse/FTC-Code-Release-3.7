@@ -19,16 +19,15 @@ public class AutonomousFarIntakeBlueMG extends LinearOpMode {
         robot.addAndUpdateTelemetry("Ready to go!");
         RelicRecoveryVuMark vuMark;
         AutonomousUtil.AllianceColor color = AutonomousUtil.getColorToDislodge(this, AutonomousUtil.AllianceColor.Red, robot);
-
         waitForStart();
+        double startTime = getRuntime();
+
 
         robot.vuforiaRelicRecoveryGetter.activateTrackables();
         vuMark = robot.vuforiaRelicRecoveryGetter.getPattern();
-        robot.relicMecanism.swingAwayFromWall();
         robot.jewelSwatter.removeJewelOfColor(color);
 
         AutonomousUtil.driveRobotOffRamp(robot, AutonomousUtil.AllianceColor.Blue);
-        robot.driveTrain.gyroTurn(.07, 180);
 
         robot.jewelSwatter.wristServo.setPosition(UniversalConstants.jewelWristStored);
 
@@ -36,89 +35,71 @@ public class AutonomousFarIntakeBlueMG extends LinearOpMode {
             vuMark = robot.vuforiaRelicRecoveryGetter.getPattern();
         }
 
-        double FAR_DISTANCE = -8.25;
-        double MIDDLE_DISTANCE = -5.5;
-        double CLOSE_DISTANCE = -3.75;
+        double FAR_DISTANCE = 8.25;
+        double MIDDLE_DISTANCE = 5.5;
+        double CLOSE_DISTANCE = 4;
 
-        double FAR_US_DISTANCE = 84;
-        double MIDDLE_US_DISTANCE = 66;
-        double CLOSE_US_DISTANCE = 48;
+        double FAR_US_DISTANCE = 86;
+        double MIDDLE_US_DISTANCE = 69;
+        double CLOSE_US_DISTANCE = 54;
+
+        double FAR_FACING_US_DISTANCE = 82;
+        double MIDDLE_FACING_US_DISTANCE = 66;
 
         double moveToPositionPower = .2;
-        double targetAngle = 180;
+        double targetAngle = 0;
+
+        telemetry.addData("VuMark", vuMark);
+        telemetry.update();
 
         switch (vuMark) {
             case RIGHT:
                 robot.driveTrain.encoderStrafeToInches(FAR_DISTANCE, moveToPositionPower, targetAngle);
-                robot.driveTrain.autoLeftDistanceSensor(FAR_US_DISTANCE, .5 * moveToPositionPower, targetAngle, DistanceUnit.CM, 2);
+                robot.driveTrain.autoRightDistanceSensor(FAR_US_DISTANCE, .5 * moveToPositionPower, targetAngle, DistanceUnit.CM, 2);
                 break;
             case CENTER:
                 robot.driveTrain.encoderStrafeToInches(MIDDLE_DISTANCE, moveToPositionPower, targetAngle);
-                robot.driveTrain.autoLeftDistanceSensor(MIDDLE_US_DISTANCE, .5 * moveToPositionPower, targetAngle, DistanceUnit.CM, 2);
+                robot.driveTrain.autoRightDistanceSensor(MIDDLE_US_DISTANCE, .5 * moveToPositionPower, targetAngle, DistanceUnit.CM, 2);
                 break;
             default:
             case LEFT:
                 robot.driveTrain.encoderStrafeToInches(CLOSE_DISTANCE, moveToPositionPower, targetAngle);
-                robot.driveTrain.autoLeftDistanceSensor(CLOSE_US_DISTANCE, .5 * moveToPositionPower, targetAngle, DistanceUnit.CM, 2);
+                robot.driveTrain.autoRightDistanceSensor(CLOSE_US_DISTANCE, .5 * moveToPositionPower, targetAngle, DistanceUnit.CM, 2);
                 break;
         }
+
         robot.driveTrain.park();
-
-        robot.driveTrain.gyroTurn(.25, targetAngle);
-        robot.driveTrain.gyroTurn(.05, targetAngle);
-
-        robot.intakeMecanism.deployFoldoutIntake();
-        robot.intakeMecanism.intake();
-        sleep(200);
-        robot.intakeMecanism.outtakeFully();
-        robot.intakeMecanism.setIntakePowers(.5, -.5);
+        robot.relicMecanism.swingElbowUp();
         sleep(500);
-        robot.intakeMecanism.setIntakePowers(-1);
-
-        robot.driveTrain.moveToInches(4, .15);
-        robot.driveTrain.moveToInches(-8, .20);
-        robot.intakeMecanism.stopIntake();
-
-        switch (vuMark) {
-            case RIGHT:
-                break;
-            case CENTER:
-                robot.driveTrain.encoderStrafeToInches(FAR_DISTANCE - MIDDLE_DISTANCE, .3, targetAngle);
-                break;
-            default:
-            case LEFT:
-                robot.driveTrain.encoderStrafeToInches(FAR_DISTANCE - CLOSE_DISTANCE, .3, targetAngle);
-                break;
-        }
-
-        robot.driveTrain.autoLeftDistanceSensor(FAR_US_DISTANCE, .3, targetAngle, DistanceUnit.CM, 2);
-
+        robot.driveTrain.moveToInches(-4, .4);
+        robot.driveTrain.moveToInches(4, .6);
+        robot.driveTrain.gyroTurn(.1, targetAngle);
+        robot.driveTrain.autoRightDistanceSensor(FAR_US_DISTANCE - 5, .5 * moveToPositionPower, targetAngle, DistanceUnit.CM, 2);
         robot.driveTrain.park();
 
         targetAngle = 180 - 155;
 
         robot.driveTrain.gyroTurn(.1, targetAngle);
         robot.intakeMecanism.intake();
-        robot.driveTrain.moveToInches(45, .65);
-        robot.driveTrain.moveToInches(-25, .65);
-
+        robot.driveTrain.moveToInchesCoast(45, .75);
+        robot.driveTrain.moveToInches(-20, .4);
         targetAngle = 180;
-        robot.driveTrain.gyroTurn(.1, targetAngle);
-
-        robot.driveTrain.autoWallDistanceSensor(40, .35, DistanceUnit.CM, 20);
-        robot.driveTrain.autoWallDistanceSensor(40, .15, DistanceUnit.CM);
+        robot.relicMecanism.swingAwayFromWall();
 
         robot.driveTrain.gyroTurn(.1, targetAngle);
         robot.driveTrain.gyroTurn(.05, targetAngle);
 
         robot.driveTrain.park();
+        robot.driveTrain.autoWallDistanceSensor(45, .45, DistanceUnit.CM, 20);
+        robot.driveTrain.autoWallDistanceSensor(45, .2, DistanceUnit.CM, 2);
 
-        robot.driveTrain.autoLeftDistanceSensor(FAR_US_DISTANCE, .3, targetAngle, DistanceUnit.CM, 3);
-        if (vuMark == RelicRecoveryVuMark.CENTER) {
-            robot.driveTrain.gyroTurn(.05, targetAngle - 15);
+        if (vuMark == RelicRecoveryVuMark.RIGHT) {
+            robot.driveTrain.autoLeftDistanceSensor(MIDDLE_FACING_US_DISTANCE, .15, targetAngle, DistanceUnit.CM, 1);
         } else {
-            robot.driveTrain.gyroTurn(.05, targetAngle + 15);
+            robot.driveTrain.autoLeftDistanceSensor(FAR_FACING_US_DISTANCE, .15, targetAngle, DistanceUnit.CM, 1);
         }
+
+        robot.driveTrain.gyroTurn(.05, targetAngle - 15);
 
         robot.driveTrain.moveToInches(4, .15);
         robot.intakeMecanism.outtakeFully();
@@ -126,15 +107,15 @@ public class AutonomousFarIntakeBlueMG extends LinearOpMode {
         robot.slamDunker.dunkMotor.setPower(UniversalConstants.dunkGlyphsSpeed * 3);
         robot.slamDunker.dunkMotor.setTargetPosition(robot.slamDunker.dunkMotor.getTargetPosition() + 150);
 
-        robot.intakeMecanism.setIntakePowers(.5, -.5);
+        robot.intakeMecanism.setIntakePowers(-.5, .5);
         sleep(500);
 
         robot.slamDunker.dunkMotor.setTargetPosition(robot.slamDunker.dunkMotor.getTargetPosition() - 150);
 
         robot.intakeMecanism.setIntakePowers(-1);
         robot.slamDunker.dunkMotor.setPower(0);
-        robot.driveTrain.moveToInches(4, .15);
+        robot.driveTrain.moveToInches(6, .15);
 
-        robot.driveTrain.moveToInches(-6, .20);
+        robot.driveTrain.moveToInches(-8, .20);
     }
 }
