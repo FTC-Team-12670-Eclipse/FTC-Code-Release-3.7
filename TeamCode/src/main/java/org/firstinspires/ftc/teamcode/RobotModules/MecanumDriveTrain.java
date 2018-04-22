@@ -716,9 +716,6 @@ public class MecanumDriveTrain {
 
     public void updateTelemetry() {
         telemetry.addData("Drive Mode", driveMode);
-        if (imu != null) {
-            telemetry.addData("heading", getHeading());
-        }
     }
 
     public void park() {

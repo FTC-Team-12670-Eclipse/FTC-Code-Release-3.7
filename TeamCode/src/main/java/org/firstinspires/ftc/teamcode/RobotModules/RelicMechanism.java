@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ServoController;
+import com.qualcomm.robotcore.hardware.ServoControllerEx;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Controller;
@@ -57,12 +59,16 @@ public class RelicMechanism {
 
     public void updateAll() {
         updateByGamepad();
-        updateTelemetry();
     }
 
     public void swingElbowUp() {
         elbowServo.setPosition(UniversalConstants.relicElbowUp);
         pincherServo.setPosition(UniversalConstants.relicPincherFullyOpen);
+    }
+
+    public void swingElbowStayPinched() {
+        elbowServo.setPosition(UniversalConstants.relicElbowUp);
+        pincherServo.setPosition(UniversalConstants.relicPincherPinched);
     }
 
     public void swingAwayFromWall() {
@@ -93,7 +99,17 @@ public class RelicMechanism {
             spoolMotor.setPower(1);
         }
 
-        double servoMoveSpeed = .02;
+        double servoMoveSpeed;
+        double pincherMoveSpeed = .04;
+
+        if(controller1.Y()){
+            elbowServo.setPosition(.84);
+        }
+        if(elbowServo.getPosition() > .70){
+            servoMoveSpeed = .01;
+        } else {
+            servoMoveSpeed = .02;
+        }
         if (linearOpMode.gamepad2.dpad_down) {
             elbowServo.setPosition(
                     Range.clip(elbowServo.getPosition() + servoMoveSpeed,
@@ -106,10 +122,10 @@ public class RelicMechanism {
 
         if (linearOpMode.gamepad2.dpad_left) {
             pincherServo.setPosition(
-                    Range.clip(pincherServo.getPosition() + 2 * servoMoveSpeed,
+                    Range.clip(pincherServo.getPosition() + pincherMoveSpeed,
                             UniversalConstants.relicPincherPinched, UniversalConstants.relicPincherFullyOpen));
         } else if (linearOpMode.gamepad2.dpad_right) {
-            pincherServo.setPosition(Range.clip(pincherServo.getPosition() - 2 * servoMoveSpeed,
+            pincherServo.setPosition(Range.clip(pincherServo.getPosition() - pincherMoveSpeed,
                     UniversalConstants.relicPincherPinched, UniversalConstants.relicPincherFullyOpen));
         }
 

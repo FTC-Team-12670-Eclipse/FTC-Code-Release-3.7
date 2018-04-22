@@ -35,7 +35,6 @@ public class SlamDunker {
 
     public void updateAll() {
         updateByGamepad();
-        updateTelemetry();
     }
 
     public void updateByGamepad() {

@@ -43,7 +43,6 @@ public class JewelSwatter {
 
     public void updateAll() {
         return;
-        //updateTelemetry();
     }
 
     public void updateTelemetry() {

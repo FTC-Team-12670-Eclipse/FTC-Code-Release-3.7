@@ -103,9 +103,6 @@ public class Robot {
         if (relicMechanismExists) {
             relicMecanism.updateAll();
         }
-        if (vuforiaRelicRecoveryGetter != null) {
-            vuforiaRelicRecoveryGetter.updateTelemetry();
-        }
         telemetry.update();
     }
 

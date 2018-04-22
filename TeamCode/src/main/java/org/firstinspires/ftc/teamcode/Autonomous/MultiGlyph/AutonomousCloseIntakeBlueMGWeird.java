@@ -58,7 +58,7 @@ public class AutonomousCloseIntakeBlueMGWeird extends LinearOpMode {
         robot.intakeMecanism.deployFoldoutIntake();
         robot.driveTrain.park();
         robot.driveTrain.moveToInches(-1, .4);
-        robot.relicMecanism.swingElbowUp();
+        robot.relicMecanism.swingElbowStayPinched();
         sleep(500);
         robot.driveTrain.moveToInches(-3, .5);
         robot.driveTrain.moveToInches(5, .6);

@@ -27,7 +27,7 @@ public class AutonomousCloseIntakeBlueMG extends LinearOpMode {
 
         robot.vuforiaRelicRecoveryGetter.activateTrackables();
         vuMark = robot.vuforiaRelicRecoveryGetter.getPattern();
-        robot.relicMecanism.swingElbowUp();
+        robot.relicMecanism.swingElbowStayPinched();
         robot.intakeMecanism.deployFoldoutIntake();
         robot.jewelSwatter.removeJewelOfColor(color);
 

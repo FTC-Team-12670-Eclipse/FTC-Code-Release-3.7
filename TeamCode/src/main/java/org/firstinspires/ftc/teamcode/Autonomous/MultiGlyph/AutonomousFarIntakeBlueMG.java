@@ -69,6 +69,7 @@ public class AutonomousFarIntakeBlueMG extends LinearOpMode {
         }
 
         robot.driveTrain.park();
+
         robot.relicMecanism.swingElbowUp();
         sleep(500);
         robot.driveTrain.moveToInches(-4, .4);

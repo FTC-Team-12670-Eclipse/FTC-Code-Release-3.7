@@ -18,7 +18,8 @@ public class AutonomousFarIntakeRedMG extends LinearOpMode {
         Robot robot = new Robot(this, true, true, true, DcMotor.ZeroPowerBehavior.BRAKE);
         robot.addAndUpdateTelemetry("Ready to go!");
         RelicRecoveryVuMark vuMark;
-        AutonomousUtil.AllianceColor color = AutonomousUtil.getColorToDislodge(this, AutonomousUtil.AllianceColor.Blue, robot);
+        AutonomousUtil.Settings settings = AutonomousUtil.getStartingSettings(this, AutonomousUtil.AllianceColor.Blue, robot);
+        AutonomousUtil.AllianceColor color = settings.allianceColor;
 
         waitForStart();
 
@@ -76,6 +77,7 @@ public class AutonomousFarIntakeRedMG extends LinearOpMode {
 
         switch (vuMark) {
             case LEFT:
+                robot.driveTrain.moveToInches(-2, .25);
                 break;
             case CENTER:
                 robot.driveTrain.encoderStrafeToInches(FAR_DISTANCE - MIDDLE_DISTANCE, moveToPositionPower, targetAngle);
@@ -88,12 +90,12 @@ public class AutonomousFarIntakeRedMG extends LinearOpMode {
         robot.driveTrain.autoRightDistanceSensor(FAR_US_DISTANCE, .3, targetAngle, DistanceUnit.CM, 2);
         robot.driveTrain.park();
 
-        targetAngle = 155;
+        targetAngle = settings.turnAngle;
 
         robot.driveTrain.gyroTurn(.1, targetAngle);
         robot.intakeMecanism.intake();
-        robot.driveTrain.moveToInches(45, .65);
-        robot.driveTrain.moveToInches(-25, .65);
+        robot.driveTrain.moveToInches(settings.distance, .65);
+        robot.driveTrain.moveToInches(-(settings.distance - 20), .65);
 
         targetAngle = 0;
         robot.driveTrain.gyroTurn(.1, targetAngle);

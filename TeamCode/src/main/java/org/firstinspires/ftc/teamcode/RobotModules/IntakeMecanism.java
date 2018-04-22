@@ -48,7 +48,6 @@ public class IntakeMecanism {
 
     public void updateAll() {
         updateByGamepad();
-        updateTelemetry();
     }
 
     public void updateByGamepad() {

@@ -71,30 +71,22 @@ public class AutonomousUtil {
 
     public static class Settings {
         public AllianceColor allianceColor;
-        public double leftAngle = 0, rightAngle = 0, centerAngle = 0;
+        public double turnAngle = 0, distance = 0;
         public boolean shouldDunk;
 
-        public Settings(AllianceColor a, double l, double r, double c, boolean s) {
+        public Settings(AllianceColor a, double l, double r, boolean s) {
             allianceColor = a;
-            leftAngle = l;
-            rightAngle = r;
-            centerAngle = c;
+            turnAngle = l;
+            distance = r;
             shouldDunk = s;
         }
     }
 
     public static Settings getStartingSettings(LinearOpMode l, AllianceColor color, Robot robot) {
-        double leftAng, centerAng, rightAng;
+        double turnAngle, distance;
         boolean shouldDunk = true;
-        if (color == AllianceColor.Blue) {
-            leftAng = 20;
-            rightAng = -20;
-            centerAng = 0;
-        } else {
-            leftAng = -20;
-            rightAng = 20;
-            centerAng = 0;
-        }
+        turnAngle = 155;
+        distance = 45;
         Controller controller1 = new Controller(l.gamepad1);
         Controller controller2 = new Controller(l.gamepad2);
         while (!l.isStarted()) {
@@ -107,21 +99,16 @@ public class AutonomousUtil {
             }
 
             if (controller1.dpadLeftOnce()) {
-                leftAng += 5;
+                turnAngle += 1;
             } else if (controller1.dpadRightOnce()) {
-                leftAng -= 5;
+                turnAngle -= 1;
             }
 
-            if (controller1.dpadUpOnce()) {
-                centerAng += 5;
-            } else if (controller1.dpadDownOnce()) {
-                centerAng -= 5;
-            }
 
             if (controller2.dpadLeftOnce()) {
-                rightAng += 5;
+                distance += 2;
             } else if (controller2.dpadRightOnce()) {
-                rightAng -= 5;
+                distance -= 2;
             }
 
             if (controller2.dpadUpOnce()) {
@@ -142,19 +129,24 @@ public class AutonomousUtil {
             }
 
             l.telemetry.addLine("Ready to Go!");
-            l.telemetry.addLine(shouldDunk ? "Will Extra Dunk" : "!!!!WILL NOT EXTRA DUNK!!!!");
             l.telemetry.addLine("Positive means turn Left");
-            l.telemetry.addData("Left Angle (c1 l/r", leftAng);
-            l.telemetry.addData("Center Angle (c1 u/d)", centerAng);
-            l.telemetry.addData("Right Angle (c2 l/r", rightAng);
+            l.telemetry.addData("Turn Angle", turnAngle);
+            l.telemetry.addData("Distance", distance);
             l.telemetry.addData("Color to Dislodge", color.name());
+            l.telemetry.addData("Gamepad 2 Dpad left", "Go farther");
+            l.telemetry.addData("Gamepad 2 Dpad right", "Go closer");
+            l.telemetry.addData("Gamepad 1 Dpad left", "Turn More");
+            l.telemetry.addData("Gamepad 1 Dpad right", "Turn Less");
             l.telemetry.addLine("Press two bumpers to switch color");
             l.telemetry.addLine("Dislodge Blue: Game pad 1");
             l.telemetry.addLine("Dislodge Red: Game pad 2");
             l.telemetry.addLine("Hold both triggers to switch color");
+            l.telemetry.addData("Front", robot.driveTrain.forwardsWallDistanceSensor.getDistance(DistanceUnit.CM));
+            l.telemetry.addData("Left Side", robot.driveTrain.leftFacingDistanceSensor.getDistance(DistanceUnit.CM));
+            l.telemetry.addData("Right Side", robot.driveTrain.rightFacingDistanceSensor.getDistance(DistanceUnit.CM));
             l.telemetry.update();
         }
-        return new Settings(color, leftAng, centerAng, rightAng, shouldDunk);
+        return new Settings(color, turnAngle, distance, shouldDunk);
     }
 
     public static AllianceColor switchColor(AllianceColor color) {
