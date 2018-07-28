@@ -14,13 +14,13 @@ public class TesterAuto extends LinearOpMode {
         robot.addAndUpdateTelemetry("Ready to go!");
         waitForStart();
 
-        robot.driveTrain.moveToInches( 36, .25);
-        robot.driveTrain.turnRelative(90,.25);
-        robot.driveTrain.moveToInches( 36, .25);
-        robot.driveTrain.turnRelative(90,.25);
-        robot.driveTrain.moveToInches( 36, .25);
-        robot.driveTrain.turnRelative(90,.25);
-        robot.driveTrain.moveToInches( 36, .25);
+        robot.driveTrain.moveToInches( 18, .25);
+        robot.driveTrain.gyroTurn(.05,90);
+        robot.driveTrain.moveToInches( 18, .25);
+        robot.driveTrain.gyroTurn(.05,180);
+        robot.driveTrain.moveToInches( 18, .25);
+        robot.driveTrain.gyroTurn(.05,270);
+        robot.driveTrain.moveToInches( 18, .25);
         robot.driveTrain.park();
     }
 }
