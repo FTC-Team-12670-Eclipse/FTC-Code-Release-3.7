@@ -15,25 +15,24 @@ public class VuforiaTrialTester extends LinearOpMode {
         Robot robot = new Robot(this, true, true, true, DcMotor.ZeroPowerBehavior.BRAKE);
         robot.addAndUpdateTelemetry("RTG");
         waitForStart();
-        RelicRecoveryVuMark vuMark;
+        RelicRecoveryVuMark vuMark = null;
         while (opModeIsActive()) {
             robot.vuforiaRelicRecoveryGetter.activateTrackables();
-            vuMark = robot.vuforiaRelicRecoveryGetter.getPattern();
-            if (vuMark == RelicRecoveryVuMark.LEFT) {
-                while (robot.vuforiaRelicRecoveryGetter.getPattern() == RelicRecoveryVuMark.LEFT) {
-                    robot.driveTrain.setAll(.05);
-                    if (robot.vuforiaRelicRecoveryGetter.getPattern() != RelicRecoveryVuMark.LEFT) {
-                        robot.driveTrain.park();
-                        break;
-                    }
+
+
+            while (robot.vuforiaRelicRecoveryGetter.getPattern() == RelicRecoveryVuMark.LEFT) {
+                robot.driveTrain.setAll(.05);
+                if (robot.vuforiaRelicRecoveryGetter.getPattern() == null) {
+                    robot.driveTrain.park();
+                    break;
                 }
-                robot.driveTrain.park();
             }
-            vuMark = robot.vuforiaRelicRecoveryGetter.getPattern();
-            if (vuMark == RelicRecoveryVuMark.RIGHT) {
+                robot.driveTrain.park();
+
+
                 while (robot.vuforiaRelicRecoveryGetter.getPattern() == RelicRecoveryVuMark.RIGHT) {
                     robot.driveTrain.setAll(-.05);
-                    if (robot.vuforiaRelicRecoveryGetter.getPattern() != RelicRecoveryVuMark.RIGHT) {
+                    if (robot.vuforiaRelicRecoveryGetter.getPattern() == null) {
                         robot.driveTrain.park();
                         break;
                     }
@@ -42,4 +41,3 @@ public class VuforiaTrialTester extends LinearOpMode {
             }
         }
     }
-}
